@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "948858097892",
+    "project_id": "mobileasm-af62b",
+    "storage_bucket": "mobileasm-af62b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948858097892:android:c582b1de13d808648a5cf1",
+        "android_client_info": {
+          "package_name": "com.example.dating_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948858097892-i0bou0hfr67ioc5d4ucnofcsu10vb8c1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwJBrsNf9yq_628Lkn4VEDUDrPSgdwyw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948858097892-i0bou0hfr67ioc5d4ucnofcsu10vb8c1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
