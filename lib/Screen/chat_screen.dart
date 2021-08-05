@@ -24,27 +24,7 @@ class ChatScreen extends StatelessWidget {
               ],
             ),
           ),
-          TextButton.icon(
-              onPressed: () {
-                FirebaseAuth.instance.signOut().whenComplete(() {
-                  GoogleSignIn().disconnect();
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => WelcomePage()));}
-                            );
-              },
-              icon: Icon(Icons.logout),
-              label: Text('Logout')),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          FirebaseFirestore.instance
-              .collection('chats/ndMDkEgLhpf4FDWfSg7P/messages')
-              .add({'text': 'adding to!'});
-        },
       ),
     );
   }
