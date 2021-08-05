@@ -1,3 +1,4 @@
+import 'package:dating_app/Screen/chat_screen.dart';
 import 'package:dating_app/email_signin/auth.dart';
 import 'package:dating_app/welcomePage.dart';
 
