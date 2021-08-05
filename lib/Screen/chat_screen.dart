@@ -4,6 +4,7 @@ import 'package:dating_app/widget/chat/new_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 class ChatScreen extends StatelessWidget {
@@ -25,11 +26,13 @@ class ChatScreen extends StatelessWidget {
           ),
           TextButton.icon(
               onPressed: () {
-                FirebaseAuth.instance.signOut().whenComplete(() =>
+                FirebaseAuth.instance.signOut().whenComplete(() {
+                  GoogleSignIn().disconnect();
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => WelcomePage())));
+                            builder: (context) => WelcomePage()));}
+                            );
               },
               icon: Icon(Icons.logout),
               label: Text('Logout')),
