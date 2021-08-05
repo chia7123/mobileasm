@@ -1,6 +1,10 @@
 import 'package:dating_app/welcomePage.dart';
+import 'package:dating_app/widget/chat/message.dart';
+import 'package:dating_app/widget/chat/new_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class ChatScreen extends StatelessWidget {
   @override
@@ -10,12 +14,14 @@ class ChatScreen extends StatelessWidget {
         children: [
           Container(
             height: 400,
-            child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (ctx, index) => Container(
-                      padding: EdgeInsets.all(8),
-                      child: Text('Good'),
-                    )),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Messages(),
+                ),
+                NewMessage(),
+              ],
+            ),
           ),
           TextButton.icon(
               onPressed: () {
@@ -28,6 +34,14 @@ class ChatScreen extends StatelessWidget {
               icon: Icon(Icons.logout),
               label: Text('Logout')),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          FirebaseFirestore.instance
+              .collection('chats/ndMDkEgLhpf4FDWfSg7P/messages')
+              .add({'text': 'adding to!'});
+        },
       ),
     );
   }
