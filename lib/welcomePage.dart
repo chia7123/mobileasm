@@ -1,7 +1,8 @@
+
+import 'package:dating_app/Screen/chat_screen.dart';
 import 'package:dating_app/email_signin/auth.dart';
 import 'package:dating_app/google_signin/google_signin.dart';
-import 'package:dating_app/home.dart';
-import 'package:dating_app/welcomewidget.dart';
+import 'package:dating_app/logout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +23,9 @@ class WelcomePage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasData) {
-                return Home();
+                return ChatScreen();
               } else
-                return WelcomeWidget();
+                return AuthPage();
             }),
       ),
     );

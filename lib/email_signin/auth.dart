@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/email_signin/auth_form.dart';
-import 'package:dating_app/home.dart';
+import 'package:dating_app/logout.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -35,8 +35,6 @@ class _AuthPageState extends State<AuthPage> {
           password: password,
         );
         print('login success');
-        Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (ctx) => Home()));
       }
       authResult = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -49,8 +47,6 @@ class _AuthPageState extends State<AuthPage> {
           .set({
         'email': email,
       });
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (ctx) => Home()));
     } catch (e) {
       var message = e.toString();
       setState(() {

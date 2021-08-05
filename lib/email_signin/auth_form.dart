@@ -1,4 +1,8 @@
+import 'package:dating_app/google_signin/google_signin.dart';
+import 'package:dating_app/logout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:provider/provider.dart';
 
 class AuthForm extends StatefulWidget {
   AuthForm(
@@ -42,81 +46,112 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(isLogin == true ? 'Login' : 'Sign In'),
-      ),
-      body: Center(
-        child: Card(
-          margin: EdgeInsets.all(20),
+      // appBar: AppBar(),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        color: Colors.cyan,
+        child: Center(
           child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextFormField(
-                        key: ValueKey('email'),
-                        validator: (value) {
-                          if (value!.isEmpty || !value.contains('@')) {
-                            return 'Please enter a valid email address';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: 'Email Address',
-                        ),
-                        onSaved: (value) {
-                          _userEmail = value!;
-                        },
-                      ),
-                      TextFormField(
-                        key: ValueKey('password'),
-                        validator: (value) {
-                          if (value!.isEmpty || value.length < 8) {
-                            return 'Password must be at least 8 character long.';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(labelText: 'Password'),
-                        obscureText: true,
-                        onSaved: (value) {
-                          _userPassword = value!;
-                        },
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      if (widget.isLoading) CircularProgressIndicator(),
-                      if (!widget.isLoading)
-                        RaisedButton(
-                          onPressed: _trySubmit,
-                          child: Text(isLogin == true ? 'Login' : 'Signup'),
-                        ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(isLogin == true
-                              ? 'Doesn\'t have an account? '
-                              : 'Already have an account?'),
-                          TextButton(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Dating App',
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Card(
+                  margin: EdgeInsets.all(20),
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextFormField(
+                              key: ValueKey('email'),
+                              validator: (value) {
+                                if (value!.isEmpty || !value.contains('@')) {
+                                  return 'Please enter a valid email address';
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                labelText: 'Email Address',
+                              ),
+                              onSaved: (value) {
+                                _userEmail = value!;
+                              },
+                            ),
+                            TextFormField(
+                              key: ValueKey('password'),
+                              validator: (value) {
+                                if (value!.isEmpty || value.length < 8) {
+                                  return 'Password must be at least 8 character long.';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(labelText: 'Password'),
+                              obscureText: true,
+                              onSaved: (value) {
+                                _userPassword = value!;
+                              },
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            if (widget.isLoading) CircularProgressIndicator(),
+                            if (!widget.isLoading)
+                              RaisedButton(
+                                color: Colors.cyan,
+                                onPressed: _trySubmit,
+                                child: Text(
+                                  isLogin == true ? 'Login' : 'Signup',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(isLogin == true
+                                    ? 'Doesn\'t have an account? '
+                                    : 'Already have an account?'),
+                                TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isLogin = !isLogin;
+                                      });
+                                    },
+                                    child: Text(
+                                      isLogin == true ? 'Sign Up' : 'Login',
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ))
+                              ],
+                            ),
+                            SignInButton(
+                              Buttons.Google,
                               onPressed: () {
-                                setState(() {
-                                  isLogin = !isLogin;
+                                final provider =
+                                    Provider.of<GoogleSignInProvider>(context,
+                                        listen: false);
+                                provider.googleLogin().whenComplete(() {
+                                  print('login success');
+                                  Navigator.pop(context);
                                 });
                               },
-                              child: Text(
-                                isLogin == true ? 'Sign Up' : 'Login',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ))
-                        ],
-                      ),
-                    ],
-                  )),
+                            ),
+                          ],
+                        )),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
