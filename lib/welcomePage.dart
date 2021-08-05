@@ -1,4 +1,5 @@
 
+import 'package:dating_app/Screen/chat_room.dart';
 import 'package:dating_app/Screen/chat_screen.dart';
 import 'package:dating_app/email_signin/auth.dart';
 import 'package:dating_app/google_signin/google_signin.dart';
@@ -23,7 +24,7 @@ class WelcomePage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasData) {
-                return ChatScreen();
+                return ChatRoom();
               } else
                 return AuthPage();
             }),
