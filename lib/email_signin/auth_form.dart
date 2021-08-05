@@ -1,5 +1,5 @@
+import 'package:dating_app/Screen/chat_screen.dart';
 import 'package:dating_app/google_signin/google_signin.dart';
-import 'package:dating_app/logout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +46,6 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(),
       body: Container(
         height: MediaQuery.of(context).size.height,
         color: Colors.cyan,
@@ -96,7 +95,8 @@ class _AuthFormState extends State<AuthForm> {
                                 }
                                 return null;
                               },
-                              decoration: InputDecoration(labelText: 'Password'),
+                              decoration:
+                                  InputDecoration(labelText: 'Password'),
                               obscureText: true,
                               onSaved: (value) {
                                 _userPassword = value!;
@@ -143,7 +143,6 @@ class _AuthFormState extends State<AuthForm> {
                                         listen: false);
                                 provider.googleLogin().whenComplete(() {
                                   print('login success');
-                                  Navigator.pop(context);
                                 });
                               },
                             ),
