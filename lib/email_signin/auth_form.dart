@@ -29,11 +29,11 @@ class _AuthFormState extends State<AuthForm> {
   String _userPassword = '';
 
   void _trySubmit() {
-    final isValid = _formKey.currentState!.validate();
+    final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
 
     if (isValid) {
-      _formKey.currentState!.save();
+      _formKey.currentState.save();
       widget.submitFn(
         _userEmail.trim(),
         _userPassword.trim(),
@@ -74,7 +74,7 @@ class _AuthFormState extends State<AuthForm> {
                             TextFormField(
                               key: ValueKey('email'),
                               validator: (value) {
-                                if (value!.isEmpty || !value.contains('@')) {
+                                if (value.isEmpty || !value.contains('@')) {
                                   return 'Please enter a valid email address';
                                 }
                                 return null;
@@ -84,13 +84,13 @@ class _AuthFormState extends State<AuthForm> {
                                 labelText: 'Email Address',
                               ),
                               onSaved: (value) {
-                                _userEmail = value!;
+                                _userEmail = value;
                               },
                             ),
                             TextFormField(
                               key: ValueKey('password'),
                               validator: (value) {
-                                if (value!.isEmpty || value.length < 8) {
+                                if (value.isEmpty || value.length < 8) {
                                   return 'Password must be at least 8 character long.';
                                 }
                                 return null;
@@ -99,7 +99,7 @@ class _AuthFormState extends State<AuthForm> {
                                   InputDecoration(labelText: 'Password'),
                               obscureText: true,
                               onSaved: (value) {
-                                _userPassword = value!;
+                                _userPassword = value;
                               },
                             ),
                             SizedBox(

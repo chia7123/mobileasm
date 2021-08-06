@@ -16,7 +16,7 @@ var _enteredMessage = ' ';
 
 void _sendMessage() async {
 
-  final user = await FirebaseAuth.instance.currentUser!;
+  final user = await FirebaseAuth.instance.currentUser;
   FocusScope.of(context).unfocus();
   FirebaseFirestore.instance.collection('chat').add({
     'text': _enteredMessage,

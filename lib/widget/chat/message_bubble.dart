@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble(this.message, this.isMe, {required this.key});
+  MessageBubble(this.message, this.isMe, {@required this.key});
 
 
   final Key key;
@@ -36,7 +36,7 @@ class MessageBubble extends StatelessWidget {
             style: TextStyle(
               color: isMe
                   ? Colors.black
-                  : Theme.of(context).accentTextTheme.headline6!.color,
+                  : Theme.of(context).accentTextTheme.headline6.color,
             ),
           ),
         ),
