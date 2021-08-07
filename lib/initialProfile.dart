@@ -12,6 +12,9 @@ import 'package:intl/intl.dart';
 
 class InitialProfileScreen extends StatefulWidget {
   static const routeName = '/initialProfile';
+  final String userName;
+
+  InitialProfileScreen(this.userName);
 
   @override
   _InitialProfileScreenState createState() => _InitialProfileScreenState();
@@ -35,6 +38,7 @@ class _InitialProfileScreenState extends State<InitialProfileScreen> {
     super.initState();
     fToast = FToast();
     fToast.init(context);
+    name.value= TextEditingValue(text: widget.userName);
   }
 
   void _presentDatePicker() {

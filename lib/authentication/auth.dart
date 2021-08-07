@@ -14,11 +14,17 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   var _isLoading = false;
+
   void _submitAuthForm(
     String email,
     String password,
+    String username,
     bool isLogin,
     BuildContext ctx,
+    Future saveLoggedInPreference,
+    Future saveUserNamePreference,
+    Future saveEmailPreference,
+
   ) async {
     UserCredential authResult;
 
@@ -41,9 +47,9 @@ class _AuthPageState extends State<AuthPage> {
       FirebaseFirestore.instance
           .collection('users')
           .doc(authResult.user.uid)
-          .set({'email': email, 'password': password});
+          .set({'email': email, 'password': password,'name':username});
       Navigator.of(context)
-          .pushReplacementNamed(InitialProfileScreen.routeName);
+          .pushReplacement(MaterialPageRoute(builder: (context)=> InitialProfileScreen(username)));
     } catch (e) {
       var message = e.toString();
       setState(() {

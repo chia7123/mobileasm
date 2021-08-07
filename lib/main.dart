@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       home: WelcomePage(),
       // home: InitialProfileScreen(),
       routes: {
-        InitialProfileScreen.routeName:(context)=> InitialProfileScreen(),
+        
         ChatRoom.routeName: (context)=> ChatRoom()
       },
     );
