@@ -1,17 +1,33 @@
 import 'package:dating_app/Screen/search.dart';
+import 'package:dating_app/widget/database/constant.dart';
+import 'package:dating_app/widget/database/helperfunctions.dart';
 import 'package:flutter/material.dart';
 import 'search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:dating_app/welcomePage.dart';
 class ChatRoom extends StatefulWidget {
-  static const routeName= '/chatroom';
+static const routeName= '/chatroom';
 
   @override
   _ChatRoomState createState() => _ChatRoomState();
 }
 
 class _ChatRoomState extends State<ChatRoom> {
+
+  @override
+  void initState(){
+
+    super.initState();
+  }
+
+  getUserInfo() async {
+    Constants.myName = await HelperFunctions.getuserNameSharedPreference();
+    
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -2,7 +2,6 @@ import 'package:dating_app/Screen/chat_room.dart';
 import 'package:dating_app/Screen/chat_screen.dart';
 import 'package:dating_app/authentication/auth.dart';
 import 'package:dating_app/authentication/google_signin.dart';
-import 'package:dating_app/logout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
