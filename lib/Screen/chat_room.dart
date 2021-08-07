@@ -23,8 +23,9 @@ class _ChatRoomState extends State<ChatRoom> {
 
   getUserInfo() async {
     Constants.myName = await HelperFunctions.getuserNameSharedPreference();
-    
-
+    setState(() {
+      
+    });
   }
 
 
@@ -48,7 +49,7 @@ class _ChatRoomState extends State<ChatRoom> {
         child: Icon(Icons.search),
         onPressed: (){
           Navigator.push(context, MaterialPageRoute(
-            // builder: (context) => search()
+            builder: (context) => search()
           ));
         },
       ),

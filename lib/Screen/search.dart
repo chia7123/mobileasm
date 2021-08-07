@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/conversation.dart';
 import 'package:dating_app/widget/database/constant.dart';
 import 'package:dating_app/widget/database/database.dart';
+import 'package:dating_app/widget/database/helperfunctions.dart';
 import 'package:flutter/material.dart';
 
 class search extends StatefulWidget {
@@ -37,6 +38,10 @@ class _searchState extends State<search> {
 
   createChatroomAndStart({String userName}){
 
+    print("${Constants.myName}");
+
+    if(userName != Constants.myName){
+      
     String chatRoomId = getChatRoomId(userName, Constants.myName);
 
     List<String> users = [userName, Constants.myName];
@@ -49,6 +54,9 @@ class _searchState extends State<search> {
     Navigator.push(context, MaterialPageRoute(
       builder: (context) => ConversationScreen()
     ));
+    }else{
+      print("you cannot send message!");
+    }
   }
 
     Widget SearchTile({String userName, String userDes}){
@@ -94,6 +102,7 @@ class _searchState extends State<search> {
     super.initState();}
   }
 
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,6 +127,7 @@ class _searchState extends State<search> {
                   )),
                   GestureDetector(
                     onTap: () {
+                      print("${Constants.myName}");
                       initiateSearch();
                       FocusScope.of(context).unfocus();
                       searchtextcontol.clear();
