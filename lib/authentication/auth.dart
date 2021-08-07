@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dating_app/email_signin/auth_form.dart';
+import 'package:dating_app/authentication/auth_form.dart';
 import 'package:dating_app/initialProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,19 +33,17 @@ class _AuthPageState extends State<AuthPage> {
         );
         Navigator.of(context).pop();
       }
-      authResult = await _auth
-          .createUserWithEmailAndPassword(
+      authResult = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
-      )
-          .whenComplete(() {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (ctx) => InitialProfileScreen()));
-      });
-      await FirebaseFirestore.instance
+      );
+
+      FirebaseFirestore.instance
           .collection('users')
           .doc(authResult.user.uid)
           .set({'email': email, 'password': password});
+      Navigator.of(context)
+          .pushReplacementNamed(InitialProfileScreen.routeName);
     } catch (e) {
       var message = e.toString();
       setState(() {

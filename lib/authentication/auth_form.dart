@@ -1,5 +1,5 @@
 import 'package:dating_app/Screen/chat_screen.dart';
-import 'package:dating_app/google_signin/google_signin.dart';
+import 'package:dating_app/authentication/google_signin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
