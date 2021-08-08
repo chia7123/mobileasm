@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/widget/database/constant.dart';
 import 'package:dating_app/widget/database/database.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   DatabaseMethods databaseMethods = new DatabaseMethods();
   TextEditingController messageController = new TextEditingController();
 
-  Stream chatMessageStream;
+  Stream<QuerySnapshot> chatMessageStream;
 
   Widget ChatMessageList() {
     return StreamBuilder(
@@ -118,7 +119,7 @@ class MessageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: isMe? 0 : 24, right: isMe? 24:0),
+      padding: EdgeInsets.only(left: isMe? 0 : 24, right: isMe? 24 : 0),
       margin: EdgeInsets.symmetric(vertical: 8),
       width: MediaQuery.of(context).size.width,
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
@@ -130,8 +131,8 @@ class MessageTile extends StatelessWidget {
               const Color(0xff007EF4),
               const Color(0xff2A75BC)
             ] : [
-              const Color(0x1AFFFFFF),
-              const Color(0x1AFFFFFF),
+              const Color(0xff007EF4),
+              const Color(0xff2A75BC),
             ],
           ),
           borderRadius: isMe ? 
