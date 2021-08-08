@@ -3,7 +3,6 @@ import 'package:dating_app/widget/database/database.dart';
 import 'package:flutter/material.dart';
 
 class ConversationScreen extends StatefulWidget {
-
   final String chatRoomId;
   ConversationScreen(this.chatRoomId);
 
@@ -12,24 +11,47 @@ class ConversationScreen extends StatefulWidget {
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
-
   DatabaseMethods databaseMethods = new DatabaseMethods();
   TextEditingController messageController = new TextEditingController();
 
-  Widget ChatMessageList(){
+  Stream chatMessageStream;
 
+  Widget ChatMessageList() {
+    return StreamBuilder(
+      stream: chatMessageStream,
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  return MessageTile(
+                      snapshot.data.docs[index].data()["message"],
+                      snapshot.data.docs[index].data()["sender"] == Constants.myName);
+                })
+            : Container();
+      },
+    );
   }
 
-  sendMessage(){
-    if(messageController.text.isNotEmpty){
-
-      Map<String, String> messageMap = {
-      "message" : messageController.text,
-      "sender" : Constants.myName
-
-    };
-        databaseMethods.getConversationMessages(widget.chatRoomId, messageMap);
+  sendMessage() {
+    if (messageController.text.isNotEmpty) {
+      Map<String, dynamic> messageMap = {
+        "message": messageController.text,
+        "sender": Constants.myName,
+        "time": DateTime.now().microsecondsSinceEpoch
+      };
+      databaseMethods.addConversationMessages(widget.chatRoomId, messageMap);
     }
+  }
+
+  @override
+  void initState() {
+    databaseMethods.getConversationMessages(widget.chatRoomId).then((val) {
+      setState(() {
+        chatMessageStream = val;
+      });
+    });
+    super.initState();
   }
 
   @override
@@ -39,6 +61,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
       body: Container(
         child: Stack(
           children: [
+            ChatMessageList(),
             Container(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -84,6 +107,47 @@ class _ConversationScreenState extends State<ConversationScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class MessageTile extends StatelessWidget {
+  final String message;
+  final bool isMe;
+  MessageTile(this.message, this.isMe);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: isMe? 0 : 24, right: isMe? 24:0),
+      margin: EdgeInsets.symmetric(vertical: 8),
+      width: MediaQuery.of(context).size.width,
+      alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: isMe ? [
+              const Color(0xff007EF4),
+              const Color(0xff2A75BC)
+            ] : [
+              const Color(0x1AFFFFFF),
+              const Color(0x1AFFFFFF),
+            ],
+          ),
+          borderRadius: isMe ? 
+          BorderRadius.only(topLeft: Radius.circular(23),
+          topRight: Radius.circular(23),
+          bottomLeft: Radius.circular(23)
+          ):
+          BorderRadius.only(topLeft: Radius.circular(23),
+          topRight: Radius.circular(23),
+          bottomRight: Radius.circular(23)
+          )
+        ),
+          child: Text(
+        message,
+        style: TextStyle(color: Colors.white),
+      )),
     );
   }
 }
