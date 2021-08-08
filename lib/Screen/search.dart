@@ -52,7 +52,9 @@ class _searchState extends State<search> {
     };
     DatabaseMethods().createChatRoom(chatRoomId, chatRoomMap);
     Navigator.push(context, MaterialPageRoute(
-      builder: (context) => ConversationScreen()
+      builder: (context) => ConversationScreen(
+        chatRoomId
+      )
     ));
     }else{
       print("you cannot send message!");
