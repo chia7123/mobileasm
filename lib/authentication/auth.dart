@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/authentication/auth_form.dart';
 import 'package:dating_app/initialProfile.dart';
 import 'package:dating_app/welcomePage.dart';
+import 'package:dating_app/widget/database/database.dart';
+import 'package:dating_app/widget/database/helperfunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -15,6 +17,8 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   var _isLoading = false;
+  DatabaseMethods _databaseMethods = new DatabaseMethods();
+  QuerySnapshot snapshotUserInfo;
 
   void _submitAuthForm(
     String email,
@@ -25,7 +29,6 @@ class _AuthPageState extends State<AuthPage> {
     Future saveLoggedInPreference,
     Future saveUserNamePreference,
     Future saveEmailPreference,
-
   ) async {
     UserCredential authResult;
 
@@ -34,11 +37,27 @@ class _AuthPageState extends State<AuthPage> {
         _isLoading = true;
       });
       if (isLogin) {
-        authResult = await _auth.signInWithEmailAndPassword(
+        saveEmailPreference;
+
+        _databaseMethods.getUserByUserEmail(email).then((val) {
+          snapshotUserInfo = val;
+          HelperFunctions.saveuserNameSharedPreference(
+              snapshotUserInfo.docs[0]['name']);
+        });
+
+        authResult = await _auth
+            .signInWithEmailAndPassword(
           email: email,
           password: password,
-        );
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> WelcomePage()));
+        )
+            // ignore: missing_return
+            .then((value) {
+          if (value != null) {
+            saveLoggedInPreference;
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => WelcomePage()));
+          }
+        });
       }
       authResult = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -48,9 +67,9 @@ class _AuthPageState extends State<AuthPage> {
       FirebaseFirestore.instance
           .collection('users')
           .doc(authResult.user.uid)
-          .set({'email': email, 'password': password,'name':username});
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context)=> InitialProfileScreen(username)));
+          .set({'email': email, 'password': password, 'name': username});
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => InitialProfileScreen(username)));
     } catch (e) {
       var message = e.toString();
       setState(() {
