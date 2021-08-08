@@ -126,8 +126,10 @@ class _searchState extends State<search> {
                         border: InputBorder.none),
                   )),
                   GestureDetector(
-                    onTap: () {
-                      print("${Constants.myName}");
+                    onTap: () async {
+                      print("${Constants.myName} 1");
+                      print("${ await HelperFunctions.getuserNameSharedPreference()} 123");
+
                       initiateSearch();
                       FocusScope.of(context).unfocus();
                       searchtextcontol.clear();
