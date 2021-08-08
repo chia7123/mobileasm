@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/authentication/auth_form.dart';
 import 'package:dating_app/initialProfile.dart';
+import 'package:dating_app/welcomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -37,7 +38,7 @@ class _AuthPageState extends State<AuthPage> {
           email: email,
           password: password,
         );
-        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> WelcomePage()));
       }
       authResult = await _auth.createUserWithEmailAndPassword(
         email: email,
