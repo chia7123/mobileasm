@@ -115,6 +115,8 @@ class _InitialProfileScreenState extends State<InitialProfileScreen> {
         'imageUrl': url,
         'description': desc.text,
         'id': user.uid,
+        'dob':_selectedDate,
+        'gender':selectedGender,
       }).whenComplete(() => {
             _showToast('Sign up sucessful'),
             Navigator.pushReplacementNamed(context, ChatRoom.routeName)

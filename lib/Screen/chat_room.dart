@@ -4,10 +4,10 @@ import 'package:dating_app/Screen/search.dart';
 import 'package:dating_app/widget/database/constant.dart';
 import 'package:dating_app/widget/database/database.dart';
 import 'package:dating_app/widget/database/helperfunctions.dart';
+import 'package:dating_app/widget/dialogBox.dart';
 import 'package:flutter/material.dart';
 import 'search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:dating_app/welcomePage.dart';
 
 class ChatRoom extends StatefulWidget {
@@ -30,12 +30,14 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   return ChatRoomsTile(
-                      snapshot.data.docs[index]
-                          .data()["chatroomID"]
-                          .toString()
-                          .replaceAll("_", "")
-                          .replaceAll(Constants.myName, ""),
-                      snapshot.data.docs[index].data()["chatroomID"]);
+                    userName: snapshot.data.docs[index]
+                        .data()["chatroomID"]
+                        .toString()
+                        .replaceAll("_", "")
+                        .replaceAll(Constants.myName, ""),
+                    chatRoom: snapshot.data.docs[index].data()["chatroomID"],
+                   
+                  );
                 })
             : Container();
       },
@@ -46,6 +48,7 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
   void initState() {
     getUserInfo();
     WidgetsBinding.instance.addObserver(this);
+
     super.initState();
     setStatus("Online");
   }
@@ -106,10 +109,13 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
 class ChatRoomsTile extends StatelessWidget {
   final String chatRoom;
   final String userName;
-  ChatRoomsTile(this.userName, this.chatRoom);
+  
+  ChatRoomsTile(
+      {this.userName, this.chatRoom});
 
   @override
   Widget build(BuildContext context) {
+   
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -126,13 +132,14 @@ class ChatRoomsTile extends StatelessWidget {
               width: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(40)),
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(40)),
               child: Text("${userName.substring(0, 1).toUpperCase()}"),
             ),
             SizedBox(
               width: 8,
             ),
-            Text(userName)
+            Text(userName),
           ],
         ),
       ),
