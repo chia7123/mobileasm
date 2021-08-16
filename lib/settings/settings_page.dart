@@ -1,6 +1,23 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-
+void main(){
+  runApp(MyApp());
+}
+class MyApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp( 
+    title: 'Demo',
+    theme: ThemeData(
+      primarySwatch: Colors.blue,
+      ),
+      home: SettingPageUI());
+  }
+}
 class SettingPageUI extends StatefulWidget {
   @override
   _SettingPageUIState createState() => _SettingPageUIState();
@@ -37,16 +54,53 @@ class _SettingPageUIState extends State<SettingPageUI> {
             ),
             Divider(height: 20, thickness: 1),
             SizedBox(height: 10),
-            buildAccountOption(context, "Change Password"),
-            buildAccountOption(context, "Update Email"),
-            buildAccountOption(context, "Update Preference"),
+            buildChangePassword(context, "Change Password"),
+            buildUpdateEmail(context, "Update Email"),
+            buildUpdatePreference(context, "Update Preference"),
           ],
         ),
       ),
     );
   }
 
-  GestureDetector buildAccountOption(BuildContext context, String title) {
+  GestureDetector buildChangePassword(BuildContext context, String title) {
+    return GestureDetector(
+      onTap: () async {
+          FirebaseUser user = await FirebaseAuth.instance.currentUser();
+      }
+
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title, style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[600]
+            )),
+            Icon(Icons.arrow_forward_ios,
+            color: Colors.grey
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  GestureDetector buildUpdateEmail(BuildContext context, String title) {
+    return GestureDetector(
+      onTap: () async{
+        var message;
+        FirebaseUser firebaseUser = await
+      },
+    );
+  }
+
+
+  GestureDetector buildUpdatePreference(BuildContext context, String title) {
     return GestureDetector(
       onTap: () {
         showDialog(context: context, builder: (BuildContext context){
@@ -55,7 +109,7 @@ class _SettingPageUIState extends State<SettingPageUI> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("INSERT HERE")
+                Text("PREFERENCE")
               ],
             ),
             actions: [
