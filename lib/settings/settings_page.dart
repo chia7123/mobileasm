@@ -1,9 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/widget/database/database.dart';
+
 
 
 void main(){
@@ -57,8 +57,12 @@ class _SettingPageUIState extends State<SettingPageUI> {
             Divider(height: 20, thickness: 1),
             SizedBox(height: 10),
             TextButton(
-              child: Text('Change Password'),
-              onPressed: _changePassword),
+              onPressed: _changePassword,
+              child: Text('Change Password'),),
+            TextButton(
+              onPressed: _updateEmail, 
+              child: Text('Update Email'),)
+
           ],
         ),
       ),
@@ -66,14 +70,27 @@ class _SettingPageUIState extends State<SettingPageUI> {
   }
 
   
-void _changePassword() async{
-  String password;
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-          User currentUser = firebaseAuth.currentUser;
-          currentUser.updatePassword(password).then((_){
-            print("Password Succesfully changed");
-          }).catchError((error){
-            print("An Error has occured changing password");
-          });
+void _changePassword() {
+  @override
+        
+  UserCredential authResult;
+  var password;
+  FirebaseFirestore.instance
+    .collection('users')
+    .doc(authResult.user.uid)
+    .set({'password': password});
 }
+
+void _updateEmail() {
+
+  @override
+
+  UserCredential authResult;
+  var email;
+  FirebaseFirestore.instance
+    .collection('users')
+    .doc(authResult.user.uid)
+    .set({'email': email});
+}
+
 }
