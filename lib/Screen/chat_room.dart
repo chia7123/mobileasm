@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/conversation.dart';
 import 'package:dating_app/Screen/search.dart';
 import 'package:dating_app/widget/database/constant.dart';
@@ -16,7 +17,7 @@ class ChatRoom extends StatefulWidget {
   _ChatRoomState createState() => _ChatRoomState();
 }
 
-class _ChatRoomState extends State<ChatRoom> {
+class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
   DatabaseMethods databaseMethods = new DatabaseMethods();
   Stream chatRoomStream;
 
@@ -46,8 +47,26 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   void initState() {
     getUserInfo();
+    WidgetsBinding.instance.addObserver(this);
 
     super.initState();
+    setStatus("Online");
+  }
+
+  void setStatus(String status) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .update({"status": status});
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      setStatus("Online");
+    } else {
+      setStatus("Offline");
+    }
   }
 
   getUserInfo() async {
