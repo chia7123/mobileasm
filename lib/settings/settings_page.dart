@@ -1,6 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/widget/database/database.dart';
 
 
+
+void main(){
+  runApp(MyApp());
+}
+class MyApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp( 
+    title: 'Demo',
+    theme: ThemeData(
+      primarySwatch: Colors.blue,
+      ),
+      home: SettingPageUI());
+  }
+}
 class SettingPageUI extends StatefulWidget {
   @override
   _SettingPageUIState createState() => _SettingPageUIState();
@@ -37,53 +56,41 @@ class _SettingPageUIState extends State<SettingPageUI> {
             ),
             Divider(height: 20, thickness: 1),
             SizedBox(height: 10),
-            buildAccountOption(context, "Change Password"),
-            buildAccountOption(context, "Update Email"),
-            buildAccountOption(context, "Update Preference"),
+            TextButton(
+              onPressed: _changePassword,
+              child: Text('Change Password'),),
+            TextButton(
+              onPressed: _updateEmail, 
+              child: Text('Update Email'),)
+
           ],
         ),
       ),
     );
   }
 
-  GestureDetector buildAccountOption(BuildContext context, String title) {
-    return GestureDetector(
-      onTap: () {
-        showDialog(context: context, builder: (BuildContext context){
-          return AlertDialog(
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("INSERT HERE")
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                }, 
-                child: Text("Close"))
-            ],
-          );
-        });
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(title, style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey[600]
-            )),
-            Icon(Icons.arrow_forward_ios,
-            color: Colors.grey
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  
+void _changePassword() {
+  @override
+        
+  UserCredential authResult;
+  var password;
+  FirebaseFirestore.instance
+    .collection('users')
+    .doc(authResult.user.uid)
+    .set({'password': password});
+}
+
+void _updateEmail() {
+
+  @override
+
+  UserCredential authResult;
+  var email;
+  FirebaseFirestore.instance
+    .collection('users')
+    .doc(authResult.user.uid)
+    .set({'email': email});
+}
+
 }
