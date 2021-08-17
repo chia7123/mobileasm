@@ -1,6 +1,4 @@
 import 'package:dating_app/Screen/chat_room.dart';
-import 'package:dating_app/authentication/auth.dart';
-import 'package:dating_app/initialProfile.dart';
 import 'package:dating_app/welcomePage.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -24,11 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: WelcomePage(),
-      // home: InitialProfileScreen(),
-      routes: {
-        
-        ChatRoom.routeName: (context)=> ChatRoom()
-      },
+      routes: {ChatRoom.routeName: (context) => ChatRoom()},
     );
   }
 }

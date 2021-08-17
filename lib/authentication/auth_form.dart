@@ -1,9 +1,5 @@
-
-import 'package:dating_app/authentication/google_signin.dart';
 import 'package:dating_app/widget/database/helperfunctions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:provider/provider.dart';
 
 class AuthForm extends StatefulWidget {
   AuthForm(
@@ -13,15 +9,14 @@ class AuthForm extends StatefulWidget {
 
   final bool isLoading;
   final void Function(
-    String email,
-    String password,
-    String username,
-    bool isLogin,
-    BuildContext ctx,
-    Future saveLoggedInPreference,
-    Future saveUserNamePreference,
-    Future saveEmailPreference
-  ) submitFn;
+      String email,
+      String password,
+      String username,
+      bool isLogin,
+      BuildContext ctx,
+      Future saveLoggedInPreference,
+      Future saveUserNamePreference,
+      Future saveEmailPreference) submitFn;
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -32,7 +27,7 @@ class _AuthFormState extends State<AuthForm> {
   var isLogin = true;
   String _userEmail = '';
   String _userPassword = '';
-  String _userName ='';
+  String _userName = '';
 
   void _trySubmit() {
     final isValid = _formKey.currentState.validate();
@@ -49,7 +44,6 @@ class _AuthFormState extends State<AuthForm> {
         HelperFunctions.saveuserLoggedInSharedPreference(isLogin),
         HelperFunctions.saveuserNameSharedPreference(_userName),
         HelperFunctions.saveuserEmailSharedPreference(_userEmail),
-
       );
     }
   }
@@ -82,21 +76,21 @@ class _AuthFormState extends State<AuthForm> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            if(!isLogin)
-                            TextFormField(
-                              key: ValueKey('nickname'),
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'The nickname must not be empty.';
-                                }
-                                return null;
-                              },
-                              decoration:
-                                  InputDecoration(labelText: 'Nickname'),
-                              onSaved: (value) {
-                                _userName = value;
-                              },
-                            ),
+                            if (!isLogin)
+                              TextFormField(
+                                key: ValueKey('nickname'),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'The nickname must not be empty.';
+                                  }
+                                  return null;
+                                },
+                                decoration:
+                                    InputDecoration(labelText: 'Nickname'),
+                                onSaved: (value) {
+                                  _userName = value;
+                                },
+                              ),
                             TextFormField(
                               key: ValueKey('email'),
                               validator: (value) {
@@ -160,17 +154,6 @@ class _AuthFormState extends State<AuthForm> {
                                       ),
                                     ))
                               ],
-                            ),
-                            SignInButton(
-                              Buttons.Google,
-                              onPressed: () {
-                                final provider =
-                                    Provider.of<GoogleSignInProvider>(context,
-                                        listen: false);
-                                provider.googleLogin().whenComplete(() {
-                                  print('login success');
-                                });
-                              },
                             ),
                           ],
                         )),
