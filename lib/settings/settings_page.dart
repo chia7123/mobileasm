@@ -6,10 +6,8 @@ import 'package:dating_app/widget/database/database.dart';
 
 
 
-void main(){
-  runApp(MyApp());
-}
-class MyApp extends StatelessWidget{
+
+class Settings extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp( 
@@ -91,6 +89,4 @@ void _updateEmail() {
     .collection('users')
     .doc(authResult.user.uid)
     .set({'email': email});
-}
-
 }
