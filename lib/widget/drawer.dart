@@ -1,5 +1,7 @@
 import 'package:dating_app/Screen/chat_room.dart';
 import 'package:dating_app/welcomePage.dart';
+import 'package:dating_app/widget/dialogBox.dart';
+import 'package:dating_app/widget/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -48,12 +50,13 @@ class Drawers extends StatelessWidget {
             height: 20,
           ),
           buildListTile('Account', Icons.account_box, () {
-            
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => user_Profile()));
           }),
           buildListTile('Logout', Icons.logout, () {
-           FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => WelcomePage()));
+            FirebaseAuth.instance.signOut();
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => WelcomePage()));
           }),
         ],
       ),

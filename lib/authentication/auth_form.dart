@@ -1,3 +1,4 @@
+import 'package:dating_app/authentication/resetPassword.dart';
 import 'package:dating_app/database/helperfunctions.dart';
 import 'package:flutter/material.dart';
 
@@ -124,7 +125,9 @@ class _AuthFormState extends State<AuthForm> {
                             ),
                             if (isLogin)
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ResetPassword()));
+                                  },
                                   child: Text(
                                     'Forget Password ?',
                                     style: TextStyle(

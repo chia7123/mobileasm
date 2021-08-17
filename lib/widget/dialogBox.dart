@@ -10,7 +10,6 @@ class DialogBox {
     String gender,
     String imageUrl,
     DateTime dob,
-    Function startChat,
   ) async {
     bool error = false;
 
@@ -24,11 +23,15 @@ class DialogBox {
               child: CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.grey,
-                backgroundImage: !error
-                    ? NetworkImage(imageUrl)
-                    : NetworkImage('https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'),
+                backgroundImage:
+                // !error
+                     NetworkImage(imageUrl),
+                    // : NetworkImage(
+                    //     'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'),
                 onBackgroundImageError: (_, __) {
                   error = true;
+                  imageUrl='https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png';
+                  // NetworkImage('https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png');
                 },
               ),
             ),
@@ -133,7 +136,7 @@ class DialogBox {
         ),
         buttons: [
           DialogButton(
-            onPressed: () =>Navigator.pop(context),
+            onPressed: () => Navigator.pop(context),
             child: Text(
               "Close",
               style: TextStyle(color: Colors.white, fontSize: 20),

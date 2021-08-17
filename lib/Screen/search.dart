@@ -80,7 +80,6 @@ class _searchState extends State<search> {
         gender,
         imageUrl,
         dob,
-        createChatroomAndStart(userName: userName),
       ),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
