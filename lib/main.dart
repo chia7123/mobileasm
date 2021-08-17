@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: WelcomePage(),
+      // home: Drawer(),
       routes: {ChatRoom.routeName: (context) => ChatRoom()},
     );
   }

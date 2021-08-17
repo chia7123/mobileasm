@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/authentication/auth_form.dart';
+import 'package:dating_app/database/database.dart';
+import 'package:dating_app/database/helperfunctions.dart';
 import 'package:dating_app/initialProfile.dart';
 import 'package:dating_app/welcomePage.dart';
-import 'package:dating_app/widget/database/database.dart';
-import 'package:dating_app/widget/database/helperfunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

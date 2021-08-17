@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dating_app/widget/database/constant.dart';
-import 'package:dating_app/widget/database/database.dart';
+import 'package:dating_app/database/constant.dart';
+import 'package:dating_app/database/database.dart';
 import 'package:flutter/material.dart';
 
 class ConversationScreen extends StatefulWidget {

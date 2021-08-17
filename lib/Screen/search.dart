@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/conversation.dart';
-import 'package:dating_app/widget/database/constant.dart';
-import 'package:dating_app/widget/database/database.dart';
-import 'package:dating_app/widget/database/helperfunctions.dart';
+import 'package:dating_app/database/constant.dart';
+import 'package:dating_app/database/database.dart';
+import 'package:dating_app/database/helperfunctions.dart';
 import 'package:dating_app/widget/dialogBox.dart';
 import 'package:flutter/material.dart';
 

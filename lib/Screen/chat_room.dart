@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/conversation.dart';
 import 'package:dating_app/Screen/search.dart';
-import 'package:dating_app/widget/database/constant.dart';
-import 'package:dating_app/widget/database/database.dart';
-import 'package:dating_app/widget/database/helperfunctions.dart';
-import 'package:dating_app/widget/dialogBox.dart';
+import 'package:dating_app/database/constant.dart';
+import 'package:dating_app/database/database.dart';
+import 'package:dating_app/database/helperfunctions.dart';
+import 'package:dating_app/widget/drawer.dart';
 import 'package:flutter/material.dart';
 import 'search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,7 +36,6 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                         .replaceAll("_", "")
                         .replaceAll(Constants.myName, ""),
                     chatRoom: snapshot.data.docs[index].data()["chatroomID"],
-                   
                   );
                 })
             : Container();
@@ -82,25 +81,21 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => WelcomePage()));
-              },
-              icon: Icon(Icons.logout))
-        ],
-      ),
-      body: chatRoomList(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.search),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => search()));
-        },
+    return SafeArea(
+      child: Scaffold(
+        drawer: Drawers(),
+        appBar: AppBar(
+          title: Text('Chat Room',style: TextStyle(fontWeight: FontWeight.bold),),
+          centerTitle: true,
+        ),
+        body: chatRoomList(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.search),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => search()));
+          },
+        ),
       ),
     );
   }
@@ -109,13 +104,11 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
 class ChatRoomsTile extends StatelessWidget {
   final String chatRoom;
   final String userName;
-  
-  ChatRoomsTile(
-      {this.userName, this.chatRoom});
+
+  ChatRoomsTile({this.userName, this.chatRoom});
 
   @override
   Widget build(BuildContext context) {
-   
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -132,8 +125,7 @@ class ChatRoomsTile extends StatelessWidget {
               width: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(40)),
+                  color: Colors.blue, borderRadius: BorderRadius.circular(40)),
               child: Text("${userName.substring(0, 1).toUpperCase()}"),
             ),
             SizedBox(

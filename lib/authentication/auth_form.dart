@@ -1,4 +1,4 @@
-import 'package:dating_app/widget/database/helperfunctions.dart';
+import 'package:dating_app/database/helperfunctions.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
@@ -122,8 +122,17 @@ class _AuthFormState extends State<AuthForm> {
                                 _userPassword = value;
                               },
                             ),
+                            if (isLogin)
+                              TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    'Forget Password ?',
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  )),
                             SizedBox(
-                              height: 30,
+                              height: 10,
                             ),
                             if (widget.isLoading) CircularProgressIndicator(),
                             if (!widget.isLoading)
