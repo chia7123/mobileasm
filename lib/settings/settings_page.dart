@@ -4,20 +4,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/widget/database/database.dart';
 
-
-
-
-class Settings extends StatelessWidget{
+class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( 
-    title: 'Demo',
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
-      ),
-      home: SettingPageUI());
+    return MaterialApp(
+        title: 'Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: SettingPageUI());
   }
 }
+
 class SettingPageUI extends StatefulWidget {
   @override
   _SettingPageUIState createState() => _SettingPageUIState();
@@ -30,7 +28,7 @@ class _SettingPageUIState extends State<SettingPageUI> {
       appBar: AppBar(
         title: Text("Settings", style: TextStyle(fontSize: 22)),
         leading: IconButton(
-          onPressed: (){},
+          onPressed: () {},
           icon: Icon(
             Icons.arrow_back,
             color: Colors.white,
@@ -49,44 +47,43 @@ class _SettingPageUIState extends State<SettingPageUI> {
                   color: Colors.blue,
                 ),
                 SizedBox(width: 10),
-                Text("Account", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold))
+                Text("Account",
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold))
               ],
             ),
             Divider(height: 20, thickness: 1),
             SizedBox(height: 10),
             TextButton(
               onPressed: _changePassword,
-              child: Text('Change Password'),),
+              child: Text('Change Password'),
+            ),
             TextButton(
-              onPressed: _updateEmail, 
-              child: Text('Update Email'),)
-
+              onPressed: _updateEmail,
+              child: Text('Update Email'),
+            )
           ],
         ),
       ),
     );
   }
 
-  
-void _changePassword() {
-  @override
-        
-  UserCredential authResult;
-  var password;
-  FirebaseFirestore.instance
-    .collection('users')
-    .doc(authResult.user.uid)
-    .set({'password': password});
-}
+  void _changePassword() {
+    @override
+    UserCredential authResult;
+    var password;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(authResult.user.uid)
+        .set({'password': password});
+  }
 
-void _updateEmail() {
-
-  @override
-
-  UserCredential authResult;
-  var email;
-  FirebaseFirestore.instance
-    .collection('users')
-    .doc(authResult.user.uid)
-    .set({'email': email});
+  void _updateEmail() {
+    @override
+    UserCredential authResult;
+    var email;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(authResult.user.uid)
+        .set({'email': email});
+  }
 }
