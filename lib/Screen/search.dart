@@ -5,6 +5,8 @@ import 'package:dating_app/widget/database/database.dart';
 import 'package:dating_app/widget/database/helperfunctions.dart';
 import 'package:flutter/material.dart';
 
+import '../shared_function.dart';
+
 class search extends StatefulWidget {
   @override
   _searchState createState() => _searchState();
@@ -36,31 +38,6 @@ class _searchState extends State<search> {
         }) : Container();
   }
 
-  createChatroomAndStart({String userName}){
-
-    print("${Constants.myName}");
-
-    if(userName != Constants.myName){
-      
-    String chatRoomId = getChatRoomId(userName, Constants.myName);
-
-    List<String> users = [userName, Constants.myName];
-
-    Map<String, dynamic> chatRoomMap ={
-      "users" : users,
-      "chatroomID" :chatRoomId
-    };
-    DatabaseMethods().createChatRoom(chatRoomId, chatRoomMap);
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) => ConversationScreen(
-        chatRoomId
-      )
-    ));
-    }else{
-      print("you cannot send message!");
-    }
-  }
-
     Widget SearchTile({String userName, String userDes}){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -82,7 +59,7 @@ class _searchState extends State<search> {
           Spacer(),
           GestureDetector(
             onTap: (){
-              createChatroomAndStart(
+              createChatroomAndStart(context,
                 userName: userName
               );
             },

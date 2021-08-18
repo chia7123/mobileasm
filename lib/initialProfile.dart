@@ -153,7 +153,6 @@ class _InitialProfileScreenState extends State<InitialProfileScreen> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: Card(
-                  elevation: 10,
                   margin:
                       EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 25),
                   child: SingleChildScrollView(
