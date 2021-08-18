@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:age/age.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/picker/user_image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +15,8 @@ class user_Profile extends StatefulWidget {
 }
 
 class _user_ProfileState extends State<user_Profile> {
+  
+
   @override
   void initState() {
     FirebaseFirestore.instance
@@ -30,16 +35,23 @@ class _user_ProfileState extends State<user_Profile> {
 
   TextEditingController desc = TextEditingController();
 
-  Future<void> updateProfile() {
-    return FirebaseFirestore.instance.collection('usersw')
+  Future<void> updateProfile(String imageUrl) async {
+    
+
+    return FirebaseFirestore.instance
+        .collection('users')
         .doc(FirebaseAuth.instance.currentUser.uid)
-        .update({'description': desc.text})
+        .update({
+          'description': desc.text,
+        })
         .whenComplete(() => Fluttertoast.showToast(
             msg: 'Update Successful',
             backgroundColor: Colors.white,
             textColor: Colors.black))
         .catchError((error) => print("Failed to update user: $error"));
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -67,22 +79,7 @@ class _user_ProfileState extends State<user_Profile> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Container(
-                            child: CircleAvatar(
-                              radius: 50,
-                              backgroundColor: Colors.grey,
-                              backgroundImage: !error
-                                  ? NetworkImage(doc['imageUrl'])
-                                  : NetworkImage(
-                                      'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'),
-                              onBackgroundImageError: (_, __) {
-                                
-                                setState(() {
-                                  error = true;
-                                });
-                              },
-                            ),
-                          ),
+                          UserImagePicker(doc['imageUrl']),
                           Text(
                             doc['name'],
                             style: TextStyle(
@@ -170,14 +167,15 @@ class _user_ProfileState extends State<user_Profile> {
                                   InputDecoration(border: InputBorder.none),
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           MaterialButton(
                             color: Theme.of(context).primaryColor,
                             child: Text('Save'),
                             onPressed: () {
-                              updateProfile();
+                              updateProfile(doc['imageUrl']);
                               Navigator.pop(context);
-                              // Navigator.pop(context);
                             },
                           )
                         ],

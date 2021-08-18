@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/chat_room.dart';
-import 'package:dating_app/authentication/signup_image_picker.dart';
+import 'package:dating_app/picker/signup_image_picker.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
