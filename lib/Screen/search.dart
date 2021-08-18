@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dating_app/Screen/conversation.dart';
 import 'package:dating_app/database/constant.dart';
 import 'package:dating_app/database/database.dart';
 import 'package:dating_app/database/helperfunctions.dart';
+import 'package:dating_app/shared_function.dart';
 import 'package:dating_app/widget/dialogBox.dart';
 import 'package:flutter/material.dart';
 
@@ -42,36 +42,13 @@ class _searchState extends State<search> {
         : Container();
   }
 
-  createChatroomAndStart({String userName}) {
-    print("${Constants.myName}");
-
-    if (userName != Constants.myName) {
-      String chatRoomId = getChatRoomId(userName, Constants.myName);
-
-      List<String> users = [userName, Constants.myName];
-
-      Map<String, dynamic> chatRoomMap = {
-        "users": users,
-        "chatroomID": chatRoomId
-      };
-      DatabaseMethods().createChatRoom(chatRoomId, chatRoomMap);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ConversationScreen(chatRoomId)));
-    } else {
-      print("you cannot send message!");
-    }
-  }
-
-  Widget SearchTile({
-    BuildContext context,
-    String userName,
-    String userDes,
-    String gender,
-    String imageUrl,
-    DateTime dob,
-  }) {
+  Widget SearchTile(
+      {String userName,
+      String userDes,
+      BuildContext context,
+      String gender,
+      String imageUrl,
+      DateTime dob}) {
     return GestureDetector(
       onTap: () async => await DialogBox().showProfile(
         context,
@@ -101,7 +78,7 @@ class _searchState extends State<search> {
             Spacer(),
             GestureDetector(
               onTap: () {
-                createChatroomAndStart(userName: userName);
+                createChatroomAndStart(context, userName: userName);
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -113,7 +90,7 @@ class _searchState extends State<search> {
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

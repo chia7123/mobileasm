@@ -1,11 +1,19 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/Screen/chat_room.dart';
 
 class DatabaseMethods {
   getUserByUserName(String name) async {
     return await FirebaseFirestore.instance
         .collection("users")
+        .where("name", isEqualTo: name)
+        .get();
+  }
+
+  getLocationByUserName(String name) async {
+    return await FirebaseFirestore.instance
+        .collection("location_data")
         .where("name", isEqualTo: name)
         .get();
   }
@@ -44,6 +52,36 @@ class DatabaseMethods {
 
   getChatRooms(String userName) async {
       return await FirebaseFirestore.instance.collection("ChatRoom").where("users", arrayContains: userName).snapshots();
+  }
+
+  saveEncounter(String userName, List<dynamic> encountered_username) async
+  {
+    FirebaseFirestore.instance
+        .collection("users")
+        .where("name", isEqualTo: userName)
+        .get()
+        .then((val) {
+      if (val.docs.isEmpty) {
+        FirebaseFirestore.instance
+            .collection("users")
+            .add({
+          "name": userName,
+          "history": encountered_username
+        }).then((value) {});
+        print("doesn't exist");
+      } else {
+        print("exist");
+        FirebaseFirestore.instance
+            .collection('users')
+            .where("name", isEqualTo: userName);
+        val.docs.forEach((result) {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(result.id)
+              .update({'history': encountered_username});
+        });
+      }
+    });
   }
 
 
