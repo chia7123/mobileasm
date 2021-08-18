@@ -1,5 +1,5 @@
-import 'package:dating_app/widget/database/constant.dart';
-import 'package:dating_app/widget/database/database.dart';
+import 'package:dating_app/database/constant.dart';
+import 'package:dating_app/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
