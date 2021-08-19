@@ -1,9 +1,14 @@
 import 'dart:ui';
 
+import 'package:dating_app/Screen/chat_room.dart';
+import 'package:dating_app/Settings/theme.dart';
+import 'package:dating_app/database/constant.dart';
+import 'package:dating_app/database/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../shared_function.dart';
+
 
 class deco_var {
   deco_var._();
@@ -74,7 +79,8 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      createChatroomAndStart(context, userName: widget.title);
+                      encountered_username.add(widget.title.toString());
+                      DatabaseMethods().saveEncounter();
                     },
                     child: Text(
                       "Block",
@@ -117,14 +123,21 @@ customcontainer(var e, String msg) {
     width: 100,
     height: 120,
     decoration: BoxDecoration(
-        color: Colors.blue, borderRadius: BorderRadius.circular(24)),
+        color: AppColors.SECONDARY_COLOR, borderRadius: BorderRadius.circular(24),boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withOpacity(0.5),
+        spreadRadius: 5,
+        blurRadius: 7,
+        offset: Offset(0, 5), // changes position of shadow
+      ),
+    ],),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(e,color: Colors.white, size: 36,),
+        Icon(e,color: AppColors.PRIMARY_COLOR, size: 36,),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(msg, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          child: Text(msg, style: TextStyle(color: AppColors.PRIMARY_COLOR, fontWeight: FontWeight.bold,),),
         ),
       ],
     ),

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/Settings/theme.dart';
 import 'package:dating_app/database/constant.dart';
 import 'package:dating_app/database/database.dart';
+import 'package:dating_app/location_service_huawei/global.dart';
 import 'package:flutter/material.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -137,14 +139,9 @@ class MessageTile extends StatelessWidget {
       child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: isMe
-                    ? [const Color(0xffA1B100), const Color(0xffA1B100)]
-                    : [
-                        const Color(0xff007EF4),
-                        const Color(0xff2A75BC),
-                      ],
-              ),
+              color:  isMe ? AppColors.SECONDARY_COLOR: AppColors.PRIMARY_COLOR,
+
+
               borderRadius: isMe
                   ? BorderRadius.only(
                       topLeft: Radius.circular(23),
@@ -156,7 +153,7 @@ class MessageTile extends StatelessWidget {
                       bottomRight: Radius.circular(23))),
           child: Text(
             message,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: isMe ? Colors.white: Colors.black, fontSize: 16),
           )),
     );
   }

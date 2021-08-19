@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/chat_room.dart';
+import 'package:dating_app/database/constant.dart';
 
 class DatabaseMethods {
   getUserByUserName(String name) async {
@@ -54,20 +55,20 @@ class DatabaseMethods {
       return await FirebaseFirestore.instance.collection("ChatRoom").where("users", arrayContains: userName).snapshots();
   }
 
-  saveEncounter(String userName, List<dynamic> encountered_username2) async {
+  saveEncounter() async {
     FirebaseFirestore.instance
         .collection("users")
-        .where("name", isEqualTo: userName)
+        .where("name", isEqualTo: Constants.myName)
         .get()
         .then((val) {
       FirebaseFirestore.instance
           .collection('users')
-          .where("name", isEqualTo: userName);
+          .where("name", isEqualTo: Constants.myName);
       val.docs.forEach((result) {
         FirebaseFirestore.instance
             .collection('users')
             .doc(result.id)
-            .update({'history': encountered_username2});
+            .update({'history': encountered_username});
       });
     });
   }
