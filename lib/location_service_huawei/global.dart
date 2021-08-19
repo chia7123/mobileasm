@@ -79,7 +79,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      encountered_username.add(widget.title.toString());
+                      encountered_username.add(widget.title);
                       DatabaseMethods().saveEncounter();
                     },
                     child: Text(

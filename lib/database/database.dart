@@ -55,7 +55,7 @@ class DatabaseMethods {
       return await FirebaseFirestore.instance.collection("ChatRoom").where("users", arrayContains: userName).snapshots();
   }
 
-  saveEncounter() async {
+  saveEncounter(){
     FirebaseFirestore.instance
         .collection("users")
         .where("name", isEqualTo: Constants.myName)
@@ -69,6 +69,27 @@ class DatabaseMethods {
             .collection('users')
             .doc(result.id)
             .update({'history': encountered_username});
+      });
+    });
+  }
+
+  getEncounter()
+  {
+    FirebaseFirestore.instance
+        .collection("users")
+        .where("name", isEqualTo: Constants.myName)
+        .get()
+        .then((val) {
+      val.docs.forEach((element) {
+        if(element.data()['history']!=null)
+        {
+          encountered_username =
+          element.data()['history'];
+        }
+        else
+        {
+          encountered_username=[];
+        }
       });
     });
   }

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:age/age.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dating_app/Settings/theme.dart';
 import 'package:dating_app/picker/user_image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +32,6 @@ class _user_ProfileState extends State<user_Profile> {
 
     super.initState();
   }
-
 
   TextEditingController desc = TextEditingController();
 
@@ -98,7 +96,7 @@ class _user_ProfileState extends State<user_Profile> {
                               Text(
                                 'Gender : ',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.grey,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -106,7 +104,7 @@ class _user_ProfileState extends State<user_Profile> {
                               Text(
                                 doc['gender'],
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.grey,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -122,7 +120,7 @@ class _user_ProfileState extends State<user_Profile> {
                               Text(
                                 'Age : ',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.grey,
                                   fontSize: 15,
                                   // fontWeight: FontWeight.bold,
                                 ),
@@ -135,7 +133,7 @@ class _user_ProfileState extends State<user_Profile> {
                                     .years
                                     .toString(),
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.grey,
                                   fontSize: 15,
                                 ),
                               ),
@@ -145,12 +143,11 @@ class _user_ProfileState extends State<user_Profile> {
                             height: 10,
                           ),
                           Align(
-
                             alignment: Alignment.centerLeft,
                             child: Text(
                               'Description : ',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.grey,
                                 fontSize: 15,
                                 // fontWeight: FontWeight.bold,
                               ),
@@ -175,7 +172,7 @@ class _user_ProfileState extends State<user_Profile> {
                           ),
                           MaterialButton(
                             color: Theme.of(context).primaryColor,
-                            child: Text('Save',style: TextStyle(color: AppColors.PRIMARY_COLOR),),
+                            child: Text('Save'),
                             onPressed: () {
                               updateProfile(doc['imageUrl']);
                               Navigator.pop(context);
