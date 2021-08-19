@@ -1,9 +1,16 @@
 import 'dart:ui';
 
+import 'package:dating_app/Screen/chat_room.dart';
+import 'package:dating_app/widget/database/constant.dart';
+import 'package:dating_app/widget/database/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../shared_function.dart';
+
+bool block=false;
+
+DatabaseMethods databaseMethods = new DatabaseMethods();
 
 class deco_var {
   deco_var._();
@@ -73,8 +80,11 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 children: [
                   TextButton(
                     onPressed: () {
+                      encountered_username
+                          .add(widget.title.toString());
+                      print(encountered_username);
+                      databaseMethods.saveEncounter(Constants.myName, encountered_username);
                       Navigator.of(context).pop();
-                      createChatroomAndStart(context, userName: widget.title);
                     },
                     child: Text(
                       "Block",

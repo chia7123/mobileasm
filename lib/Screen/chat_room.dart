@@ -5,7 +5,6 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/conversation.dart';
 import 'package:dating_app/Screen/search.dart';
-import 'package:dating_app/location_service_huawei/fused_location.dart';
 import 'package:dating_app/location_service_huawei/global.dart';
 import 'package:dating_app/location_service_huawei/location_class.dart';
 import 'package:dating_app/shared_function.dart';
@@ -26,7 +25,7 @@ import 'package:huawei_location/permission/permission_handler.dart';
 
 
 import 'search.dart';
-
+List<dynamic> encountered_username = [];
 class ChatRoom extends StatefulWidget {
   static const routeName = '/chatroom';
 
@@ -193,6 +192,7 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.yellow,
       appBar: AppBar(
         actions: [
           IconButton(
@@ -232,7 +232,7 @@ class _ChatRoomState extends State<ChatRoom> {
                     )),
                 GestureDetector(
                   onTap: () async {
-                    List<dynamic> encountered_username = [];
+
                     List<String> random_name=[];
 
                     await FirebaseFirestore.instance
@@ -247,7 +247,7 @@ class _ChatRoomState extends State<ChatRoom> {
                     });
 
                     await FirebaseFirestore.instance
-                        .collection("encounter_history")
+                        .collection("users")
                         .where("name", isEqualTo: Constants.myName)
                         .get()
                         .then((val) {
@@ -286,36 +286,9 @@ class _ChatRoomState extends State<ChatRoom> {
                                 );
                               });
                         });
-                        encountered_username
-                            .add(random_name[0].toString());
-                        random_name.removeAt(0);
+
                       });
                     }
-
-                    FirebaseFirestore.instance
-                        .collection("encounter_history")
-                        .where("name", isEqualTo: Constants.myName)
-                        .get()
-                        .then((val) {
-                      if (val.docs.isEmpty) {
-                        FirebaseFirestore.instance
-                            .collection("encounter_history")
-                            .add({
-                          "name": Constants.myName,
-                          "history": encountered_username
-                        }).then((value) {});
-                      } else {
-                        FirebaseFirestore.instance
-                            .collection('encounter_history')
-                            .where("name", isEqualTo: Constants.myName);
-                        val.docs.forEach((result) {
-                          FirebaseFirestore.instance
-                              .collection('encounter_history')
-                              .doc(result.id)
-                              .update({'history': encountered_username});
-                        });
-                      }
-                    });
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -361,7 +334,7 @@ class _ChatRoomState extends State<ChatRoom> {
                     });
 
                     await FirebaseFirestore.instance
-                        .collection("encounter_history")
+                        .collection("users")
                         .where("name", isEqualTo: Constants.myName)
                         .get()
                         .then((val) {
@@ -390,6 +363,9 @@ class _ChatRoomState extends State<ChatRoom> {
                           .sort((a, b) => a.distance.compareTo(b.distance));
                     }
 
+                    location_details_list=location_details_list.take(100);
+                    location_details_list.shuffle();
+
                     // compare closest user to encounter history
                     for (int i = 0; i < location_details_list.length; i++) {
                       for (int j = 0; j < encountered_username.length; j++) {
@@ -416,9 +392,6 @@ class _ChatRoomState extends State<ChatRoom> {
                                 );
                               });
                         });
-                        encountered_username
-                            .add(location_details_list.first.name.toString());
-                        location_details_list.removeAt(0);
                       });
                     }
 

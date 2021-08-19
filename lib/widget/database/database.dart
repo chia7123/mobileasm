@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/chat_room.dart';
 
@@ -35,54 +33,49 @@ class DatabaseMethods {
     });
   }
 
-  addConversationMessages(String chatRoomId, messageMap){
-    FirebaseFirestore.instance.collection("ChatRoom")
-    .doc(chatRoomId)
-    .collection("chats")
-    .add(messageMap).catchError((e){print(e.toString());});
+  addConversationMessages(String chatRoomId, messageMap) {
+    FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .add(messageMap)
+        .catchError((e) {
+      print(e.toString());
+    });
   }
 
   getConversationMessages(String chatRoomId) async {
-    return await FirebaseFirestore.instance.collection("ChatRoom")
-    .doc(chatRoomId)
-    .collection("chats")
-    .orderBy("time", descending: false)
-    .snapshots();
+    return await FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .orderBy("time", descending: false)
+        .snapshots();
   }
 
   getChatRooms(String userName) async {
-      return await FirebaseFirestore.instance.collection("ChatRoom").where("users", arrayContains: userName).snapshots();
+    return await FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .where("users", arrayContains: userName)
+        .snapshots();
   }
 
-  saveEncounter(String userName, List<dynamic> encountered_username) async
-  {
+  saveEncounter(String userName, List<dynamic> encountered_username2) async {
     FirebaseFirestore.instance
         .collection("users")
         .where("name", isEqualTo: userName)
         .get()
         .then((val) {
-      if (val.docs.isEmpty) {
-        FirebaseFirestore.instance
-            .collection("users")
-            .add({
-          "name": userName,
-          "history": encountered_username
-        }).then((value) {});
-        print("doesn't exist");
-      } else {
-        print("exist");
+      FirebaseFirestore.instance
+          .collection('users')
+          .where("name", isEqualTo: userName);
+      val.docs.forEach((result) {
         FirebaseFirestore.instance
             .collection('users')
-            .where("name", isEqualTo: userName);
-        val.docs.forEach((result) {
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(result.id)
-              .update({'history': encountered_username});
-        });
-      }
+            .doc(result.id)
+            .update({'history': encountered_username2});
+      });
     });
   }
-
 
 }
