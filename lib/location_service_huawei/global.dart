@@ -111,3 +111,22 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     );
   }
 }
+
+customcontainer(var e, String msg) {
+  return Container(
+    width: 100,
+    height: 120,
+    decoration: BoxDecoration(
+        color: Colors.blue, borderRadius: BorderRadius.circular(24)),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(e,color: Colors.white, size: 36,),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(msg, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+        ),
+      ],
+    ),
+  );
+}
