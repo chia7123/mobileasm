@@ -1,5 +1,5 @@
 import 'package:dating_app/Screen/chat_room.dart';
-import 'package:dating_app/welcomePage.dart';
+import 'package:dating_app/Screen/splashScreen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.cyan,
         primarySwatch: Colors.blue,
       ),
-      home: WelcomePage(),
+      home: SplashScreen(),
       // home: Drawer(),
       routes: {ChatRoom.routeName: (context) => ChatRoom()},
     );
