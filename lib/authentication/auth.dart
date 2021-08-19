@@ -3,7 +3,7 @@ import 'package:dating_app/authentication/auth_form.dart';
 import 'package:dating_app/database/database.dart';
 import 'package:dating_app/database/helperfunctions.dart';
 import 'package:dating_app/initialProfile.dart';
-import 'package:dating_app/welcomePage.dart';
+import 'package:dating_app/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -57,7 +57,7 @@ class _AuthPageState extends State<AuthPage> {
             saveLoggedInPreference;
             Fluttertoast.showToast(msg: 'Login Success');
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => WelcomePage()));
+                MaterialPageRoute(builder: (context) => Wrapper()));
           }
         });
       }
