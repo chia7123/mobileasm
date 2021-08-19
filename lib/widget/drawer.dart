@@ -1,3 +1,6 @@
+import 'package:dating_app/Settings/theme.dart';
+import 'package:dating_app/location_service_huawei/encounter_list.dart';
+import 'package:dating_app/location_service_huawei/global.dart';
 import 'package:dating_app/widget/dialogBox.dart';
 import 'package:dating_app/widget/user_profile.dart';
 import 'package:dating_app/wrapper.dart';
@@ -34,7 +37,7 @@ class Drawers extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(20),
             alignment: Alignment.centerLeft,
-            color: Theme.of(context).accentColor,
+            color: AppColors.SECONDARY_COLOR,
             child: Text(
               'Settings',
               style: TextStyle(
@@ -50,6 +53,10 @@ class Drawers extends StatelessWidget {
           buildListTile('Account', Icons.account_box, () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => user_Profile()));
+          }),
+          buildListTile('Encounter List', Icons.list, () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => encounter_list()));
           }),
           buildListTile('Logout', Icons.logout, () {
             FirebaseAuth.instance.signOut();

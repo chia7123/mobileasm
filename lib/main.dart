@@ -1,8 +1,11 @@
 import 'package:dating_app/Screen/chat_room.dart';
 import 'package:dating_app/Screen/splashScreen.dart';
+import 'package:dating_app/location_service_huawei/global.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'Settings/theme.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,8 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Colors.cyan,
-        primarySwatch: Colors.blue,
+        primaryColor: AppColors.SECONDARY_COLOR,
       ),
       home: SplashScreen(),
       // home: Drawer(),

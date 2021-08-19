@@ -15,6 +15,13 @@ class ThemePage extends StatefulWidget {
   _ThemePageState createState() => _ThemePageState();
 }
 
+class AppColors {
+
+  static const Color PRIMARY_COLOR = Color(0xFFEEEEEE);
+  static const Color SECONDARY_COLOR = Color(0xFF1C4670);
+  static const Color ACCENT_COLOR = Color(0xFFF1E9E5);
+}
+
 class _ThemePageState extends State<ThemePage> {
   @override
   Widget build(BuildContext context) {
