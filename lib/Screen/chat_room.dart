@@ -227,6 +227,7 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Align(child: loadingIndicator,alignment: FractionalOffset.center,),
                         GestureDetector(
                           onTap: () async {
                             List<String> random_name = [];
