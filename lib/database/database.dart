@@ -54,33 +54,21 @@ class DatabaseMethods {
       return await FirebaseFirestore.instance.collection("ChatRoom").where("users", arrayContains: userName).snapshots();
   }
 
-  saveEncounter(String userName, List<dynamic> encountered_username) async
-  {
+  saveEncounter(String userName, List<dynamic> encountered_username2) async {
     FirebaseFirestore.instance
         .collection("users")
         .where("name", isEqualTo: userName)
         .get()
         .then((val) {
-      if (val.docs.isEmpty) {
-        FirebaseFirestore.instance
-            .collection("users")
-            .add({
-          "name": userName,
-          "history": encountered_username
-        }).then((value) {});
-        print("doesn't exist");
-      } else {
-        print("exist");
+      FirebaseFirestore.instance
+          .collection('users')
+          .where("name", isEqualTo: userName);
+      val.docs.forEach((result) {
         FirebaseFirestore.instance
             .collection('users')
-            .where("name", isEqualTo: userName);
-        val.docs.forEach((result) {
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(result.id)
-              .update({'history': encountered_username});
-        });
-      }
+            .doc(result.id)
+            .update({'history': encountered_username2});
+      });
     });
   }
 

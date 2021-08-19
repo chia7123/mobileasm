@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,8 +10,6 @@ import 'package:dating_app/database/database.dart';
 import 'package:dating_app/database/helperfunctions.dart';
 import 'package:dating_app/location_service_huawei/global.dart';
 import 'package:dating_app/location_service_huawei/location_class.dart';
-import 'dart:async';
-import 'dart:developer' as dev;
 import 'package:dating_app/shared_function.dart';
 import 'package:dating_app/widget/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,6 +22,8 @@ import 'package:huawei_location/location/location_request.dart';
 import 'package:huawei_location/location/location_settings_request.dart';
 import 'package:huawei_location/location/location_settings_states.dart';
 import 'package:huawei_location/permission/permission_handler.dart';
+
+List<dynamic> encountered_username = [];
 
 class ChatRoom extends StatefulWidget {
   static const routeName = '/chatroom';
@@ -89,7 +91,6 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
       print(location.toString());
     });
     hasPermission();
-    checkLocationSettings();
 
     //End of init location service <Lee Kai Wei>
 
@@ -223,35 +224,11 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
             Positioned.fill(
                 child: Align(
                     alignment: Alignment.bottomCenter,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                            onTap: () {
-                              checkLocationSettings();
-                            },
-                            child: Container(
-                              child: Text("Check HMS CORE"),
-                            )),
-                        GestureDetector(
-                            onTap: () {
-                              hasPermission();
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Check Location setting"),
-                                ),
-                                decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(5)),
-                              ),
-                            )),
-                        GestureDetector(
                           onTap: () async {
-                            List<dynamic> encountered_username = [];
                             List<String> random_name = [];
 
                             await FirebaseFirestore.instance
@@ -266,7 +243,7 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                             });
 
                             await FirebaseFirestore.instance
-                                .collection("encounter_history")
+                                .collection("users")
                                 .where("name", isEqualTo: Constants.myName)
                                 .get()
                                 .then((val) {
@@ -276,7 +253,6 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                               });
                             });
 
-                            // compare closest user to encounter history
                             for (int i = 0; i < random_name.length; i++) {
                               for (int j = 0;
                                   j < encountered_username.length;
@@ -303,67 +279,16 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                                         );
                                       });
                                 });
-                                encountered_username
-                                    .add(random_name[0].toString());
-                                random_name.removeAt(0);
                               });
                             }
-
-                            FirebaseFirestore.instance
-                                .collection("encounter_history")
-                                .where("name", isEqualTo: Constants.myName)
-                                .get()
-                                .then((val) {
-                              if (val.docs.isEmpty) {
-                                FirebaseFirestore.instance
-                                    .collection("encounter_history")
-                                    .add({
-                                  "name": Constants.myName,
-                                  "history": encountered_username
-                                }).then((value) {});
-                              } else {
-                                FirebaseFirestore.instance
-                                    .collection('encounter_history')
-                                    .where("name", isEqualTo: Constants.myName);
-                                val.docs.forEach((result) {
-                                  FirebaseFirestore.instance
-                                      .collection('encounter_history')
-                                      .doc(result.id)
-                                      .update(
-                                          {'history': encountered_username});
-                                });
-                              }
-                            });
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: 170,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.blue),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.near_me,
-                                      color: Colors.white,
-                                    ),
-                                    Text(
-                                      "Find Random User",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          child:
+                              customcontainer(Icons.search, "Find Random User"),
                         ),
                         GestureDetector(
                           onTap: () async {
+                            checkLocationSettings();
+                            checkLocationSettings();
                             Location location =
                                 await locationService.getLastLocation();
                             List<location_details> location_details_list = [];
@@ -382,7 +307,7 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                             });
 
                             await FirebaseFirestore.instance
-                                .collection("encounter_history")
+                                .collection("users")
                                 .where("name", isEqualTo: Constants.myName)
                                 .get()
                                 .then((val) {
@@ -412,6 +337,10 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                               location_details_list.sort(
                                   (a, b) => a.distance.compareTo(b.distance));
                             }
+
+                            location_details_list =
+                                location_details_list.take(100);
+                            location_details_list.shuffle();
 
                             // compare closest user to encounter history
                             for (int i = 0;
@@ -443,10 +372,6 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                                         );
                                       });
                                 });
-                                encountered_username.add(location_details_list
-                                    .first.name
-                                    .toString());
-                                location_details_list.removeAt(0);
                               });
                             }
 
@@ -480,29 +405,8 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: 170,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.blue),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.near_me,
-                                      color: Colors.white,
-                                    ),
-                                    Text(
-                                      "Find user near me",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+                            child: customcontainer(
+                                Icons.near_me, "Find nearby user"),
                           ),
                         ),
                       ],
