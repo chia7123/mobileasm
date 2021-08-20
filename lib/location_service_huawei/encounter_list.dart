@@ -1,6 +1,6 @@
 import 'package:dating_app/Screen/chat_room.dart';
-import 'package:dating_app/Settings/theme.dart';
 import 'package:dating_app/database/database.dart';
+import 'package:dating_app/widget/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -98,7 +98,7 @@ class _encounter_containerState extends State<encounter_container> {
               width: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: AppColors.PRIMARY_COLOR,
+                  color: PRIMARY_COLOR,
                   borderRadius: BorderRadius.circular(40)),
               child: Text("${widget.name.substring(0, 1).toUpperCase()}"),
             ),
@@ -107,7 +107,7 @@ class _encounter_containerState extends State<encounter_container> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
-              child: Text(widget.name, style: TextStyle(color: AppColors.PRIMARY_COLOR, fontWeight: FontWeight.bold, fontSize: 18),),
+              child: Text(widget.name, style: TextStyle(color: PRIMARY_COLOR, fontWeight: FontWeight.bold, fontSize: 18),),
             )
           ],
         ),

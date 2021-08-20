@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:dating_app/Screen/chat_room.dart';
-import 'package:dating_app/Settings/theme.dart';
 import 'package:dating_app/database/constant.dart';
 import 'package:dating_app/database/database.dart';
+import 'package:dating_app/widget/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -123,7 +123,7 @@ customcontainer(var e, String msg) {
     width: 100,
     height: 120,
     decoration: BoxDecoration(
-        color: AppColors.SECONDARY_COLOR, borderRadius: BorderRadius.circular(24),boxShadow: [
+        color: SECONDARY_COLOR, borderRadius: BorderRadius.circular(24),boxShadow: [
       BoxShadow(
         color: Colors.grey.withOpacity(0.5),
         spreadRadius: 5,
@@ -134,10 +134,10 @@ customcontainer(var e, String msg) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(e,color: AppColors.PRIMARY_COLOR, size: 36,),
+        Icon(e,color: PRIMARY_COLOR, size: 36,),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(msg, style: TextStyle(color: AppColors.PRIMARY_COLOR, fontWeight: FontWeight.bold,),),
+          child: Text(msg, style: TextStyle(color: PRIMARY_COLOR, fontWeight: FontWeight.bold,),),
         ),
       ],
     ),

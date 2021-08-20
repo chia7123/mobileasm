@@ -5,7 +5,6 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/conversation.dart';
 import 'package:dating_app/Screen/search.dart';
-import 'package:dating_app/Settings/theme.dart';
 import 'package:dating_app/database/constant.dart';
 import 'package:dating_app/database/database.dart';
 import 'package:dating_app/database/helperfunctions.dart';
@@ -23,6 +22,7 @@ import 'package:huawei_location/location/location_request.dart';
 import 'package:huawei_location/location/location_settings_request.dart';
 import 'package:huawei_location/location/location_settings_states.dart';
 import 'package:huawei_location/permission/permission_handler.dart';
+
 
 List<dynamic> encountered_username = [];
 
@@ -110,6 +110,7 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
       });
     });
   }
+
 
   void setStatus(String status) async {
     await FirebaseFirestore.instance
@@ -212,20 +213,20 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.PRIMARY_COLOR,
+        backgroundColor: PRIMARY_COLOR,
         drawer: Drawers(),
         appBar: AppBar(
           title: Text(
             'Chat Room',
             style: TextStyle(
-                fontWeight: FontWeight.bold, color: AppColors.PRIMARY_COLOR),
+                fontWeight: FontWeight.bold, color: PRIMARY_COLOR),
           ),
           centerTitle: true,
         ),
         body: Stack(
           children: [
             Container(
-              color: AppColors.PRIMARY_COLOR,
+              color: PRIMARY_COLOR,
               height: 470,
               child: chatRoomList(),
             ),
@@ -375,6 +376,23 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                             }
 
                             databaseMethods.saveEncounter();
+                            await FirebaseFirestore.instance
+                                .collection("location_data")
+                                .where("name", isEqualTo: Constants.myName)
+                                .get()
+                                .then((val) {
+                              FirebaseFirestore.instance
+                                  .collection('users')
+                                  .where("name", isEqualTo: Constants.myName);
+                              val.docs.forEach((result) {
+                                FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(result.id)
+                                    .update({'longitude': location.longitude,'latitude': location.latitude});
+                              });
+                            });
+
+
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -387,10 +405,10 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.SECONDARY_COLOR,
+          backgroundColor: SECONDARY_COLOR,
           child: Icon(
             Icons.search,
-            color: AppColors.PRIMARY_COLOR,
+            color: PRIMARY_COLOR,
           ),
           onPressed: () {
             Navigator.push(
@@ -421,7 +439,7 @@ class ChatRoomsTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         child: Container(
           decoration: BoxDecoration(
-              color: AppColors.SECONDARY_COLOR,
+              color: SECONDARY_COLOR,
               borderRadius: BorderRadius.circular(8),
               boxShadow: [
                 BoxShadow(
@@ -439,7 +457,7 @@ class ChatRoomsTile extends StatelessWidget {
                 width: 40,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: AppColors.PRIMARY_COLOR,
+                    color: PRIMARY_COLOR,
                     borderRadius: BorderRadius.circular(40)),
                 child: Text("${userName.substring(0, 1).toUpperCase()}"),
               ),
@@ -451,7 +469,7 @@ class ChatRoomsTile extends StatelessWidget {
                 child: Text(
                   userName,
                   style: TextStyle(
-                      color: AppColors.PRIMARY_COLOR,
+                      color: PRIMARY_COLOR,
                       fontWeight: FontWeight.bold,
                       fontSize: 18),
                 ),

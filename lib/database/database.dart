@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/chat_room.dart';
 import 'package:dating_app/database/constant.dart';
+import 'package:dating_app/widget/drawer.dart';
 
 class DatabaseMethods {
   getUserByUserName(String name) async {
@@ -93,6 +94,5 @@ class DatabaseMethods {
       });
     });
   }
-
 
 }
