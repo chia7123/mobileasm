@@ -23,7 +23,6 @@ import 'package:huawei_location/location/location_settings_request.dart';
 import 'package:huawei_location/location/location_settings_states.dart';
 import 'package:huawei_location/permission/permission_handler.dart';
 
-
 List<dynamic> encountered_username = [];
 
 class ChatRoom extends StatefulWidget {
@@ -81,6 +80,7 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     //Start of init location service <Lee Kai Wei>
+    checkLocationSettings();
     locationService = FusedLocationProviderClient();
     permissionHandler = PermissionHandler();
     locationRequest = LocationRequest();
@@ -110,7 +110,6 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
       });
     });
   }
-
 
   void setStatus(String status) async {
     await FirebaseFirestore.instance
@@ -218,8 +217,7 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
         appBar: AppBar(
           title: Text(
             'Chat Room',
-            style: TextStyle(
-                fontWeight: FontWeight.bold, color: PRIMARY_COLOR),
+            style: TextStyle(fontWeight: FontWeight.bold, color: PRIMARY_COLOR),
           ),
           centerTitle: true,
         ),
@@ -291,9 +289,9 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                         ),
                         GestureDetector(
                           onTap: () async {
-                            checkLocationSettings();
                             Location location =
                                 await locationService.getLastLocation();
+
                             List<location_details> location_details_list = [];
                             List<Map<String, dynamic>>
                                 user_location_coordinate = [];
@@ -311,31 +309,26 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
 
                             databaseMethods.getEncounter();
 
-                            if(user_location_coordinate.isNotEmpty)
-                              {
-                                for (var e in user_location_coordinate) {
-                                  location_details _temp = new location_details(
-                                      pow(
-                                          pow(e['longitude'] - location.longitude,
-                                              2) +
-                                              pow(e['latitude'] - location.latitude,
-                                                  2),
-                                          1 / 2),
-                                      e['name']);
-                                  location_details_list.add(_temp);
-                                }
+                            if (user_location_coordinate.isNotEmpty) {
+                              for (var e in user_location_coordinate) {
+                                location_details _temp = new location_details(
+                                    pow(
+                                        pow(e['longitude'] - location.longitude, 2) +
+                                            pow(e['latitude'] - location.latitude, 2),
+                                        1 / 2),
+                                    e['name']);
+                                location_details_list.add(_temp);
                               }
+                            }
 
                             //sort to ascending order
                             if (location_details_list.isNotEmpty) {
                               location_details_list.sort(
                                   (a, b) => a.distance.compareTo(b.distance));
-                              location_details_list =
-                                  location_details_list.take(100);
+
+                              location_details_list.take(50);
                               location_details_list.shuffle();
                             }
-
-
 
                             // compare closest user to encounter history
                             if (location_details_list.isNotEmpty &&
@@ -375,24 +368,32 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                               });
                             }
 
-                            databaseMethods.saveEncounter();
+                            await databaseMethods.saveEncounter();
                             await FirebaseFirestore.instance
                                 .collection("location_data")
                                 .where("name", isEqualTo: Constants.myName)
                                 .get()
                                 .then((val) {
-                              FirebaseFirestore.instance
-                                  .collection('users')
-                                  .where("name", isEqualTo: Constants.myName);
-                              val.docs.forEach((result) {
+                              if (val.docs.isEmpty) {
                                 FirebaseFirestore.instance
-                                    .collection('users')
-                                    .doc(result.id)
-                                    .update({'longitude': location.longitude,'latitude': location.latitude});
-                              });
+                                    .collection('location_data')
+                                    .add({
+                                  "name": Constants.myName,
+                                  "longitude": location.longitude,
+                                  "latitude": location.latitude
+                                });
+                              } else {
+                                val.docs.forEach((element) {
+                                  FirebaseFirestore.instance
+                                      .collection("location_data")
+                                      .doc(element.id)
+                                      .update({'longitude': location.longitude, 'latitude': location.latitude
+                                  });
+
+                                });
+
+                              }
                             });
-
-
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
