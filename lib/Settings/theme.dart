@@ -18,7 +18,7 @@ class ThemePage extends StatefulWidget {
 class AppColors {
 
   static const Color PRIMARY_COLOR = Color(0xFFEEEEEE);
-  static const Color SECONDARY_COLOR = Color(0xFF1C4670);
+  static const Color SECONDARY_COLOR = Color(0xFF035AA6);
   static const Color ACCENT_COLOR = Color(0xFFF1E9E5);
 }
 

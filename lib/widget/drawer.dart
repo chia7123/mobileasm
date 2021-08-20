@@ -56,7 +56,7 @@ class Drawers extends StatelessWidget {
           }),
           buildListTile('Encounter List', Icons.list, () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => encounter_list()));
+                MaterialPageRoute(builder: (context) => encounter_list_page()));
           }),
           buildListTile('Logout', Icons.logout, () {
             FirebaseAuth.instance.signOut();
