@@ -5,16 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class encounter_list_page extends StatefulWidget {
-
-
   const encounter_list_page({Key key}) : super(key: key);
 
   @override
-
   _encounter_list_pageState createState() => _encounter_list_pageState();
 }
 
-class _encounter_list_pageState extends State<encounter_list_page> with WidgetsBindingObserver{
+class _encounter_list_pageState extends State<encounter_list_page>
+    with WidgetsBindingObserver {
   @override
   initState() {
     get();
@@ -36,40 +34,38 @@ class _encounter_list_pageState extends State<encounter_list_page> with WidgetsB
     });
   }
 
-  void get()
-  async {
+  void get() async {
     await DatabaseMethods().getEncounter();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      appBar: AppBar(title: Text("Encounter List"),),
+      appBar: AppBar(
+        title: Text("Encounter List"),
+      ),
       body: ListView.builder(
           padding: const EdgeInsets.all(8),
           itemCount: encountered_username.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
-              onLongPress: (){
-                setState(() {
-                  encountered_username.removeAt(index);
-                  DatabaseMethods().saveEncounter();
-                });
-              },
-
-
+                onLongPress: () {
+                  setState(() {
+                    encountered_username.removeAt(index);
+                    DatabaseMethods().saveEncounter();
+                  });
+                },
                 child: encounter_container(encountered_username[index]));
-          }
-      ),
+          }),
     );
   }
 }
 
 class encounter_container extends StatefulWidget {
-
   String name;
+
   encounter_container(this.name);
+
   @override
   _encounter_containerState createState() => _encounter_containerState();
 }
@@ -82,14 +78,15 @@ class _encounter_containerState extends State<encounter_container> {
       child: Container(
         decoration: BoxDecoration(
             color: Color(0xFFA9294F),
-            borderRadius: BorderRadius.circular(8),boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 5),
-          ),
-        ]),
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 5),
+              ),
+            ]),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Row(
           children: [
@@ -107,7 +104,13 @@ class _encounter_containerState extends State<encounter_container> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
-              child: Text(widget.name, style: TextStyle(color: PRIMARY_COLOR, fontWeight: FontWeight.bold, fontSize: 18),),
+              child: Text(
+                widget.name,
+                style: TextStyle(
+                    color: PRIMARY_COLOR,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              ),
             )
           ],
         ),
@@ -115,4 +118,3 @@ class _encounter_containerState extends State<encounter_container> {
     );
   }
 }
-

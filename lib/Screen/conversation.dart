@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/database/constant.dart';
 import 'package:dating_app/database/database.dart';
-import 'package:dating_app/location_service_huawei/global.dart';
 import 'package:dating_app/widget/drawer.dart';
 import 'package:flutter/material.dart';
 
 class ConversationScreen extends StatefulWidget {
   final String chatRoomId;
+
   ConversationScreen(this.chatRoomId);
 
   @override
@@ -16,8 +16,6 @@ class ConversationScreen extends StatefulWidget {
 class _ConversationScreenState extends State<ConversationScreen> {
   DatabaseMethods databaseMethods = new DatabaseMethods();
   TextEditingController messageController = new TextEditingController();
-
-  
 
   Stream<QuerySnapshot> chatMessageStream;
 
@@ -57,19 +55,21 @@ class _ConversationScreenState extends State<ConversationScreen> {
         chatMessageStream = val;
       });
     });
-    
+
     super.initState();
   }
 
-  String getName(){
-    return widget.chatRoomId.toString().replaceAll("_", "")
-              .replaceAll(Constants.myName, "");
+  String getName() {
+    return widget.chatRoomId
+        .toString()
+        .replaceAll("_", "")
+        .replaceAll(Constants.myName, "");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: dark_mode? Colors.white: Colors.black,
+      backgroundColor: dark_mode ? Colors.white : Colors.black,
       appBar: AppBar(
         title: Text(getName()),
       ),
@@ -129,7 +129,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
 class MessageTile extends StatelessWidget {
   final String message;
   final bool isMe;
+
   MessageTile(this.message, this.isMe);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -140,9 +142,7 @@ class MessageTile extends StatelessWidget {
       child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           decoration: BoxDecoration(
-              color:  isMe ? SECONDARY_COLOR: PRIMARY_COLOR,
-
-
+              color: isMe ? SECONDARY_COLOR : PRIMARY_COLOR,
               borderRadius: isMe
                   ? BorderRadius.only(
                       topLeft: Radius.circular(23),
@@ -154,7 +154,8 @@ class MessageTile extends StatelessWidget {
                       bottomRight: Radius.circular(23))),
           child: Text(
             message,
-            style: TextStyle(color: isMe ? PRIMARY_COLOR: SECONDARY_COLOR, fontSize: 16),
+            style: TextStyle(
+                color: isMe ? PRIMARY_COLOR : SECONDARY_COLOR, fontSize: 16),
           )),
     );
   }

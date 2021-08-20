@@ -1,8 +1,9 @@
 import 'package:dating_app/authentication/login.dart';
 import 'package:dating_app/authentication/signup.dart';
 import 'package:flutter/material.dart';
+
 class LoginOrSignUp extends StatefulWidget {
-  const LoginOrSignUp({ Key key }) : super(key: key);
+  const LoginOrSignUp({Key key}) : super(key: key);
 
   @override
   _LoginOrSignUpState createState() => _LoginOrSignUpState();
@@ -10,18 +11,19 @@ class LoginOrSignUp extends StatefulWidget {
 
 class _LoginOrSignUpState extends State<LoginOrSignUp> {
   bool isToggle = false;
-  void toggleScreen(){
+
+  void toggleScreen() {
     setState(() {
-      isToggle= !isToggle;
+      isToggle = !isToggle;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    if(isToggle){
-      return SignUp(toggleScreen:toggleScreen);
-    }
-    else{
-      return Login(toggleScreen:toggleScreen);
+    if (isToggle) {
+      return SignUp(toggleScreen: toggleScreen);
+    } else {
+      return Login(toggleScreen: toggleScreen);
     }
   }
 }

@@ -68,7 +68,6 @@ class Welcome extends StatelessWidget {
             ),
             label: Text('Press Here to Continue'),
           ),
-        
         ],
       ),
     );

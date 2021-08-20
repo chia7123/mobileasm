@@ -1,9 +1,7 @@
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/chat_room.dart';
 import 'package:dating_app/database/constant.dart';
-import 'package:dating_app/widget/drawer.dart';
 
 class DatabaseMethods {
   getUserByUserName(String name) async {
@@ -37,26 +35,34 @@ class DatabaseMethods {
     });
   }
 
-  addConversationMessages(String chatRoomId, messageMap){
-    FirebaseFirestore.instance.collection("ChatRoom")
-    .doc(chatRoomId)
-    .collection("chats")
-    .add(messageMap).catchError((e){print(e.toString());});
+  addConversationMessages(String chatRoomId, messageMap) {
+    FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .add(messageMap)
+        .catchError((e) {
+      print(e.toString());
+    });
   }
 
   getConversationMessages(String chatRoomId) async {
-    return await FirebaseFirestore.instance.collection("ChatRoom")
-    .doc(chatRoomId)
-    .collection("chats")
-    .orderBy("time", descending: false)
-    .snapshots();
+    return await FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .orderBy("time", descending: false)
+        .snapshots();
   }
 
   getChatRooms(String userName) async {
-      return await FirebaseFirestore.instance.collection("ChatRoom").where("users", arrayContains: userName).snapshots();
+    return await FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .where("users", arrayContains: userName)
+        .snapshots();
   }
 
-  saveEncounter(){
+  saveEncounter() {
     FirebaseFirestore.instance
         .collection("users")
         .where("name", isEqualTo: Constants.myName)
@@ -74,25 +80,19 @@ class DatabaseMethods {
     });
   }
 
-  getEncounter()
-  {
+  getEncounter() {
     FirebaseFirestore.instance
         .collection("users")
         .where("name", isEqualTo: Constants.myName)
         .get()
         .then((val) {
       val.docs.forEach((element) {
-        if(element.data()['history']!=null)
-        {
-          encountered_username =
-          element.data()['history'];
-        }
-        else
-        {
-          encountered_username=[];
+        if (element.data()['history'] != null) {
+          encountered_username = element.data()['history'];
+        } else {
+          encountered_username = [];
         }
       });
     });
   }
-
 }

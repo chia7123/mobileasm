@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:age/age.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,8 +14,6 @@ class user_Profile extends StatefulWidget {
 }
 
 class _user_ProfileState extends State<user_Profile> {
-  
-
   @override
   void initState() {
     FirebaseFirestore.instance
@@ -36,8 +33,6 @@ class _user_ProfileState extends State<user_Profile> {
   TextEditingController desc = TextEditingController();
 
   Future<void> updateProfile(String imageUrl) async {
-    
-
     return FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser.uid)
@@ -50,8 +45,6 @@ class _user_ProfileState extends State<user_Profile> {
             textColor: Colors.black))
         .catchError((error) => print("Failed to update user: $error"));
   }
-
-  
 
   @override
   Widget build(BuildContext context) {

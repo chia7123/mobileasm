@@ -18,6 +18,7 @@ class AuthForm extends StatefulWidget {
       Future saveLoggedInPreference,
       Future saveUserNamePreference,
       Future saveEmailPreference) submitFn;
+
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -126,7 +127,11 @@ class _AuthFormState extends State<AuthForm> {
                             if (isLogin)
                               TextButton(
                                   onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ResetPassword()));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ResetPassword()));
                                   },
                                   child: Text(
                                     'Forget Password ?',
