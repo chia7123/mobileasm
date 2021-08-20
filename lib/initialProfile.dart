@@ -38,7 +38,7 @@ class _InitialProfileScreenState extends State<InitialProfileScreen> {
     super.initState();
     fToast = FToast();
     fToast.init(context);
-    name.value= TextEditingValue(text: widget.userName);
+    name.value = TextEditingValue(text: widget.userName);
   }
 
   void _presentDatePicker() {
@@ -115,8 +115,8 @@ class _InitialProfileScreenState extends State<InitialProfileScreen> {
         'imageUrl': url,
         'description': desc.text,
         'id': user.uid,
-        'dob':_selectedDate,
-        'gender':selectedGender,
+        'dob': _selectedDate,
+        'gender': selectedGender,
       }).whenComplete(() => {
             _showToast('Sign up sucessful'),
             Navigator.pushReplacementNamed(context, ChatRoom.routeName)

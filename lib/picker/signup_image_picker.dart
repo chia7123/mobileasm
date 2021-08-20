@@ -5,13 +5,16 @@ import 'package:image_picker/image_picker.dart';
 
 class SignUpImagePicker extends StatefulWidget {
   SignUpImagePicker(this.imagePickFn);
+
   final Function(File pickedImage) imagePickFn;
+
   @override
   _SignUpImagePickerState createState() => _SignUpImagePickerState();
 }
 
 class _SignUpImagePickerState extends State<SignUpImagePicker> {
   File _pickedImage;
+
   // CollectionReference userInfo = FirebaseFirestore.instance.collection('users');
 
   void _showdialog(BuildContext ctx) {
@@ -65,11 +68,13 @@ class _SignUpImagePickerState extends State<SignUpImagePicker> {
       children: [
         CircleAvatar(
           radius: 50,
-          backgroundImage:
-              _pickedImage != null ? FileImage(_pickedImage) : NetworkImage('https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png'),
+          backgroundImage: _pickedImage != null
+              ? FileImage(_pickedImage)
+              : NetworkImage(
+                  'https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png'),
         ),
         TextButton.icon(
-          onPressed: ()=>_showdialog(context),
+          onPressed: () => _showdialog(context),
           icon: Icon(
             Icons.image,
             color: Theme.of(context).primaryColor,

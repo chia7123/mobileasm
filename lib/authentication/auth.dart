@@ -4,8 +4,8 @@ import 'package:dating_app/database/database.dart';
 import 'package:dating_app/database/helperfunctions.dart';
 import 'package:dating_app/initialProfile.dart';
 import 'package:dating_app/wrapper.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthPage extends StatefulWidget {

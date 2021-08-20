@@ -1,7 +1,4 @@
-class Constants{
-    static String myName = "";
-    static String desc = "";
-    
-
-
+class Constants {
+  static String myName = "";
+  static String desc = "";
 }

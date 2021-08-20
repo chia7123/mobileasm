@@ -73,7 +73,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     );
   }
 
-  void resetPassword() async{
+  void resetPassword() async {
     if (email.text.length == 0 || !email.text.contains('@')) {
       Fluttertoast.showToast(msg: "Please enter a valid email");
       return;

@@ -1,14 +1,12 @@
 import 'dart:ui';
 
 import 'package:dating_app/Screen/chat_room.dart';
-import 'package:dating_app/database/constant.dart';
 import 'package:dating_app/database/database.dart';
 import 'package:dating_app/widget/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../shared_function.dart';
-
 
 class deco_var {
   deco_var._();
@@ -123,21 +121,34 @@ customcontainer(var e, String msg) {
     width: 100,
     height: 120,
     decoration: BoxDecoration(
-        color: SECONDARY_COLOR, borderRadius: BorderRadius.circular(24),boxShadow: [
-      BoxShadow(
-        color: Colors.grey.withOpacity(0.5),
-        spreadRadius: 5,
-        blurRadius: 7,
-        offset: Offset(0, 5), // changes position of shadow
-      ),
-    ],),
+      color: SECONDARY_COLOR,
+      borderRadius: BorderRadius.circular(24),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 5,
+          blurRadius: 7,
+          offset: Offset(0, 5), // changes position of shadow
+        ),
+      ],
+    ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(e,color: PRIMARY_COLOR, size: 36,),
+        Icon(
+          e,
+          color: PRIMARY_COLOR,
+          size: 36,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(msg, style: TextStyle(color: PRIMARY_COLOR, fontWeight: FontWeight.bold,),),
+          child: Text(
+            msg,
+            style: TextStyle(
+              color: PRIMARY_COLOR,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ],
     ),

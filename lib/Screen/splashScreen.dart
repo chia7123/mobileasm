@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:dating_app/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -41,7 +42,9 @@ class _splashScreenState extends State<SplashScreen> {
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               SpinKitDoubleBounce(
                 color: Colors.white,
                 size: 30.0,

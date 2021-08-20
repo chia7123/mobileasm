@@ -1,6 +1,6 @@
-import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:flutter/material.dart';
 import 'package:age/age.dart';
+import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class DialogBox {
   showProfile(
@@ -24,13 +24,14 @@ class DialogBox {
                 radius: 50,
                 backgroundColor: Colors.grey,
                 backgroundImage:
-                // !error
-                     NetworkImage(imageUrl),
-                    // : NetworkImage(
-                    //     'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'),
+                    // !error
+                    NetworkImage(imageUrl),
+                // : NetworkImage(
+                //     'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'),
                 onBackgroundImageError: (_, __) {
                   error = true;
-                  imageUrl='https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png';
+                  imageUrl =
+                      'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png';
                   // NetworkImage('https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png');
                 },
               ),

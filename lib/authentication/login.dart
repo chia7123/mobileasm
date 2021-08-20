@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
   final Function toggleScreen;
+
   const Login({Key key, this.toggleScreen}) : super(key: key);
 
   @override
@@ -23,7 +24,9 @@ class _LoginState extends State<Login> {
   final _formkey = GlobalKey<FormState>();
   bool _isLoading = false;
   String _errorMessage;
+
   bool get isLoading => _isLoading;
+
   String get errorMessage => _errorMessage;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   FToast fToast;

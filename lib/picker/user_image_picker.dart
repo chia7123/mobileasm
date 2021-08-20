@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 
 class UserImagePicker extends StatefulWidget {
   UserImagePicker(this.imageUrl);
+
   final String imageUrl;
 
   @override

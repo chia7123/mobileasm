@@ -313,8 +313,12 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                               for (var e in user_location_coordinate) {
                                 location_details _temp = new location_details(
                                     pow(
-                                        pow(e['longitude'] - location.longitude, 2) +
-                                            pow(e['latitude'] - location.latitude, 2),
+                                        pow(e['longitude'] - location.longitude,
+                                                2) +
+                                            pow(
+                                                e['latitude'] -
+                                                    location.latitude,
+                                                2),
                                         1 / 2),
                                     e['name']);
                                 location_details_list.add(_temp);
@@ -387,11 +391,11 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
                                   FirebaseFirestore.instance
                                       .collection("location_data")
                                       .doc(element.id)
-                                      .update({'longitude': location.longitude, 'latitude': location.latitude
+                                      .update({
+                                    'longitude': location.longitude,
+                                    'latitude': location.latitude
                                   });
-
                                 });
-
                               }
                             });
                           },

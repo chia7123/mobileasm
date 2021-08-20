@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/initialProfile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
   final Function toggleScreen;
+
   const SignUp({Key key, this.toggleScreen}) : super(key: key);
 
   @override
@@ -19,7 +21,9 @@ class _SignUpState extends State<SignUp> {
   final _formkey = GlobalKey<FormState>();
   bool _isLoading = false;
   String _errorMessage;
+
   bool get isLoading => _isLoading;
+
   String get errorMessage => _errorMessage;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -40,7 +44,7 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
-  Future signup(String email, String password,String username) async {
+  Future signup(String email, String password, String username) async {
     try {
       UserCredential authResult;
       authResult = await firebaseAuth.createUserWithEmailAndPassword(
@@ -50,7 +54,6 @@ class _SignUpState extends State<SignUp> {
           .collection('users')
           .doc(authResult.user.uid)
           .set({'email': email, 'password': password, 'name': username});
-      
     } on SocketException {
       setLoading(false);
       setMessage('No internet, Please connect to internet');
@@ -105,8 +108,8 @@ class _SignUpState extends State<SignUp> {
                   validator: (val) {
                     if (val.isEmpty) {
                       return 'Please enter a email address';
-                    }else
-                    return null;
+                    } else
+                      return null;
                   },
                   decoration: InputDecoration(
                     hintText: 'Nickname',
@@ -162,13 +165,15 @@ class _SignUpState extends State<SignUp> {
                 MaterialButton(
                   onPressed: () async {
                     if (_formkey.currentState.validate()) {
-                      await signup(_emailController.text.trim(),
-                              _passwordController.text.trim(),_userNameController.text.trim())
+                      await signup(
+                              _emailController.text.trim(),
+                              _passwordController.text.trim(),
+                              _userNameController.text.trim())
                           .whenComplete(() => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      InitialProfileScreen(_userNameController.text.trim()))));
+                                  builder: (context) => InitialProfileScreen(
+                                      _userNameController.text.trim()))));
                     }
                   },
                   height: 50,
