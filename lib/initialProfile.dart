@@ -27,6 +27,7 @@ class _InitialProfileScreenState extends State<InitialProfileScreen> {
   File _userImageFile;
   DateTime _selectedDate;
   String selectedGender;
+  String url;
 
   TextEditingController name = TextEditingController();
   TextEditingController desc = TextEditingController();
@@ -92,13 +93,13 @@ class _InitialProfileScreenState extends State<InitialProfileScreen> {
         .child('user_profile_image')
         .child(user.uid + '.jpg');
 
-    await imageStorage.putFile(_userImageFile);
-    final url = await imageStorage.getDownloadURL();
-
-    if (url == null) {
+    if (_userImageFile == null) {
       _showToast('Please upload a profile image');
       return;
     }
+
+    await imageStorage.putFile(_userImageFile);
+    url = await imageStorage.getDownloadURL();
 
     if (selectedGender == null) {
       _showToast('Please select your gender');

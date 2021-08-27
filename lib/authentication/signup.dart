@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/database/database.dart';
+import 'package:dating_app/database/helperfunctions.dart';
 import 'package:dating_app/initialProfile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,8 @@ class _SignUpState extends State<SignUp> {
 
   String get errorMessage => _errorMessage;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  DatabaseMethods _databaseMethods = new DatabaseMethods();
+  QuerySnapshot snapshotUserInfo;
 
   @override
   void initState() {
@@ -46,6 +50,11 @@ class _SignUpState extends State<SignUp> {
 
   Future signup(String email, String password, String username) async {
     try {
+      _databaseMethods.getUserByUserEmail(email).then((val) {
+        snapshotUserInfo = val;
+        HelperFunctions.saveuserNameSharedPreference(
+            snapshotUserInfo.docs[0]['name']);
+      });
       UserCredential authResult;
       authResult = await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -53,7 +62,7 @@ class _SignUpState extends State<SignUp> {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(authResult.user.uid)
-          .set({'email': email, 'password': password, 'name': username});
+          .set({'email': email, 'password': password, 'name': username,'imageUrl':''});
     } on SocketException {
       setLoading(false);
       setMessage('No internet, Please connect to internet');

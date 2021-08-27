@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/Screen/chat_room.dart';
 import 'package:dating_app/authentication/welcomePage.dart';
+import 'package:dating_app/initialProfile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,22 @@ class Wrapper extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasData) {
-              return ChatRoom();
+              return StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser.uid)
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    DocumentSnapshot<Object> doc = snapshot.data;
+                    if (doc == null) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    if (doc['imageUrl'] == '') {
+                      return InitialProfileScreen(doc['name']);
+                    } else
+                      return ChatRoom();
+                  });
             } else
               return Welcome();
           }),

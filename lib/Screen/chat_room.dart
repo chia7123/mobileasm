@@ -136,7 +136,7 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
         maketoast("Permission Existed");
       }
     } catch (e) {
-      maketoast(e.toString());
+     
     }
   }
 
@@ -145,7 +145,7 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
       final bool status = await permissionHandler.requestLocationPermission();
       maketoast("Permission granted");
     } catch (e) {
-      maketoast(e.toString());
+      
     }
   }
 
@@ -157,7 +157,7 @@ class _ChatRoomState extends State<ChatRoom> with WidgetsBindingObserver {
       dev.log(states.toString());
     } catch (e) {
       setState(() {
-        maketoast(e.toString());
+       
       });
     }
   }
